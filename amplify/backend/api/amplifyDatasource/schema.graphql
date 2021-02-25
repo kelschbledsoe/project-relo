@@ -1,0 +1,12 @@
+type Post @model @auth(rules: [{allow: public}]) @key(name: "byAuthors", fields: ["authorsID"]) {
+  id: ID!
+  text: String
+  authorsID: ID!
+}
+
+type Authors @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  first_name: String
+  last_name: String
+  Posts: [Post] @connection(keyName: "byAuthors", fields: ["id"])
+}
