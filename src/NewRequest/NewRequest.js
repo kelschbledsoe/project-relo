@@ -1,9 +1,50 @@
-import React from 'react';
+import React, { useReducer, useState } from 'react';
 import {Card, CardHeader, 
   CardBody, Row, Col, Button, 
   Form, FormGroup, Label, Input} from 'reactstrap';
 
+  // State object logic
+const formReducer = (state, event) => {
+  if(event.reset) {
+    return {
+      First: '',
+      Last: '',
+      Phone: '',
+      Email: '',
+      Address: '',
+      City: '',
+      State: '',
+      Zip: '',
+      New: '',
+      Company: '',
+    }
+  }
+  return {
+    ...state,
+    [event.name]: event.value
+  }
+}
 function NewRequest() {
+  const [formData, setFormData] = useReducer(formReducer, {});
+  // This event is the Submit button behavior. Has a cool down period to let the API catch up then has a JS alert box.
+  const [submitting, setSubmitting] = useState(false);
+  const handleSubmit = event => {
+    event.preventDefault();
+    setSubmitting(true);
+    setTimeout(() => {
+      setSubmitting(false);
+      setFormData({
+        reset: true
+      })
+    }, 3000)
+  }
+
+  const handleChange = event => {
+    setFormData({
+      name: event.target.name,
+      value: event.target.value,
+    });
+  }
     return (
       <>
         <div className="content">
@@ -12,30 +53,49 @@ function NewRequest() {
               <Card className="card-plain">
                 <CardHeader tag='h2'>New Request</CardHeader>
                 <CardHeader>Please complete all fields to submit your request.</CardHeader>
+                {submitting &&
+                  <div>
+                  You are submitting the following:
+                  <ul>
+                    {Object.entries(formData).map(([name, value]) => (
+                      <li key={name}><strong>{name}</strong>:{value.toString()}</li>
+                    ))}
+                  </ul>
+                </div>
+                }
                 <CardBody>
                   <div
                     id="NewRequest"
                     className="NewRequest"
                     style={{ position: "relative", overflow: "hidden" }}
                   >
-                    <Form>
+                  <Form onSubmit={handleSubmit}>
                     <Row form>
                       <Col md={3}>
                         <FormGroup>
                           <Label for="Name">First Name</Label>
-                          <Input type="text" name="firstName" id="firstName" placeholder="First Name" required/>
+                          <Input type="text" name="First" id="firstName" placeholder="First Name" 
+                          onChange={handleChange}
+                          value={formData.First || ''}
+                          required/>
                         </FormGroup>
                       </Col>
                       <Col md={3}>
                         <FormGroup>
                           <Label for="Name">Last Name</Label>
-                          <Input type="text" name="lastName" id="lastName" placeholder="Last Name" required/>
+                          <Input type="text" name="Last" id="lastName" placeholder="Last Name" 
+                          onChange={handleChange}
+                          value={formData.Last || ''}
+                          required/>
                         </FormGroup>
                       </Col>
                       <Col md={6}>
                         <FormGroup>
                           <Label for="Phone">Phone Number</Label>
-                          <Input type="text" name="password" id="examplePassword" placeholder="Phone Number" maxLength="10" required/>
+                          <Input type="text" name="Phone" id="examplePassword" placeholder="Phone Number" maxLength="10" 
+                          onChange={handleChange}
+                          value={formData.Phone || ''}
+                          required/>
                         </FormGroup>
                       </Col>
                     </Row>
@@ -43,13 +103,19 @@ function NewRequest() {
                         <Col md={6}>
                           <FormGroup>
                             <Label for="Email">Email</Label>
-                            <Input type="email" name="email" id="Email" placeholder="Email" required/>
+                            <Input type="email" name="Email" id="Email" placeholder="Email" 
+                            onChange={handleChange}
+                            value={formData.Email || ''}
+                            required/>
                           </FormGroup>
                         </Col>
                         <Col md={6}>
                           <FormGroup>
                             <Label for="CurrentAddress">Current Address</Label>
-                            <Input type="text" name="address" id="CurrentAddress" placeholder="Current Address" required/>
+                            <Input type="text" name="Address" id="CurrentAddress" placeholder="Current Address" 
+                            onChange={handleChange}
+                            value={formData.Address || ''}
+                            required/>
                           </FormGroup>
                         </Col>
                     </Row>
@@ -58,19 +124,28 @@ function NewRequest() {
                       <Col md={6}>
                         <FormGroup>
                           <Label for="exampleCity">City</Label>
-                          <Input type="text" name="city" id="City" placeholder="City" required/>
+                          <Input type="text" name="City" id="City" placeholder="City" 
+                          onChange={handleChange}
+                          value={formData.City || ''}
+                          required/>
                         </FormGroup>
                       </Col>
                       <Col md={4}>
                         <FormGroup>
-                          <Label for="exampleState">State</Label>
-                          <Input type="text" name="state" id="State" placeholder="State" maxLength="2" required/>
+                          <Label for="exampleState">State Initials</Label>
+                          <Input type="text" name="State" id="State" placeholder="State" maxLength="2" 
+                          onChange={handleChange}
+                          value={formData.State || ''}
+                          required/>
                         </FormGroup>
                       </Col>
                       <Col md={2}>
                         <FormGroup>
                           <Label for="exampleZip">Zip</Label>
-                          <Input type="text" name="zip" id="Zip" placeholder="Zip" maxLength="5" required/>
+                          <Input type="text" name="Zip" id="Zip" placeholder="Zip" maxLength="5" 
+                          onChange={handleChange}
+                          value={formData.Zip || ''}
+                          required/>
                         </FormGroup>  
                       </Col>
                     </Row>
@@ -78,15 +153,19 @@ function NewRequest() {
                       <Col md={6}>
                         <FormGroup> 
                           <Label for="NewAddress">New Location</Label>
-                          <Input type="text" name="address2" id="NewAddress" placeholder="New Address" required/>
+                          <Input type="text" name="New" id="NewAddress" placeholder="New Location" 
+                          onChange={handleChange}
+                          value={formData.New || ''}
+                          required/>
                         </FormGroup>
                       </Col>
                     </Row>
-                  </Form>
-                  <FormGroup row>
-                    <Label for="SelectCompany" sm={2}>Select companies to start a mortgage request with. More than one can be selected by holding the CTRL button.</Label>
+                    <FormGroup row>
+                    <Label for="SelectCompany" sm={2}>Select one company to start a mortgage request with. More can be created later.</Label>
                     <Col sm={10}>
-                      <Input type="select" name="selectCompany" id="SelectCompany" multiple required>
+                      <Input type="select" name="Company" id="SelectCompany"
+                      onChange={handleChange}
+                      value={formData.Company || ''}>
                         <option>Chase</option>
                         <option>PNC Bank</option>
                         <option>Quicken Loans</option>
@@ -96,7 +175,9 @@ function NewRequest() {
                     </Col>
                   </FormGroup>
                   <Button color="warning" href='/'>Back</Button>{' '}
-                  <Button onClick={()=>alert('Your request has been submitted') } color="warning" href='/'>Submit</Button>
+                  <Button color="warning" type="submit">Submit</Button>
+                  </Form>
+                  
                   </div>
                 </CardBody>
               </Card>
