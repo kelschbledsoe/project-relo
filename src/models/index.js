@@ -4,9 +4,8 @@ import { schema } from './schema';
 
 
 
-const { Post, Authors } = initSchema(schema);
+const { Agent } = initSchema(schema);
 
 export {
-  Post,
-  Authors
+  Agent
 };

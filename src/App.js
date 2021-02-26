@@ -3,22 +3,24 @@ import './App.css';
 import Navigation from './components/Navbar';
 import Routes from './Routes';
 import { DataStore } from '@aws-amplify/datastore';
-import { Authors } from './models';
+import { Agent } from './models';
 
 function App() {
-  async function createAuthor()
+  async function createAgent()
   {
     await DataStore.save(
-      new Authors({
-      "first_name": "Lorem ipsum dolor sit amet",
-      "last_name": "Lorem ipsum dolor sit amet",
-      "Posts": []
+      new Agent({
+      "firstName": "Tap",
+      "lastName": "Amet",
+      "companyName": "Lorem ipsum dolor sit amet",
+      "email": "j@gmail.com"
     })
   );
   }
-  async function queryAuthor()
+  async function queryAgent()
   {
-    const models = await DataStore.query(Authors);
+    const models = await DataStore.query(Agent);
+    console.log("working");
     console.log(models);
   }
   
@@ -27,8 +29,8 @@ function App() {
       <Navigation />
       <Routes />
       <h3>Hello World</h3>
-      <button onClick={createAuthor}>Create Author</button>
-      <button onClick={queryAuthor}>Query Author</button>
+      <button onClick={createAgent}>Create Agent</button>
+      <button onClick={queryAgent}>Query Agent</button>
 
       
     </div>

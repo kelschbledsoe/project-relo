@@ -1,7 +1,7 @@
 export const schema = {
     "models": {
-        "Post": {
-            "name": "Post",
+        "Agent": {
+            "name": "Agent",
             "fields": {
                 "id": {
                     "name": "id",
@@ -10,96 +10,37 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "text": {
-                    "name": "text",
+                "firstName": {
+                    "name": "firstName",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
-                "authorsID": {
-                    "name": "authorsID",
+                "lastName": {
+                    "name": "lastName",
                     "isArray": false,
-                    "type": "ID",
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "companyName": {
+                    "name": "companyName",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "email": {
+                    "name": "email",
+                    "isArray": false,
+                    "type": "String",
                     "isRequired": true,
                     "attributes": []
                 }
             },
             "syncable": true,
-            "pluralName": "Posts",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byAuthors",
-                        "fields": [
-                            "authorsID"
-                        ]
-                    }
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "allow": "public",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "Authors": {
-            "name": "Authors",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "first_name": {
-                    "name": "first_name",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "last_name": {
-                    "name": "last_name",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "Posts": {
-                    "name": "Posts",
-                    "isArray": true,
-                    "type": {
-                        "model": "Post"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": "authorsID"
-                    }
-                }
-            },
-            "syncable": true,
-            "pluralName": "Authors",
+            "pluralName": "Agents",
             "attributes": [
                 {
                     "type": "model",
@@ -126,5 +67,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "669b2e94f61d38450fec5cd5388b9601"
+    "version": "0d19da7ff22f457d8860ea304a5c6a01"
 };

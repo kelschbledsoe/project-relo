@@ -1,4 +1,6 @@
 import React from 'react';
+import { DataStore } from '@aws-amplify/datastore';
+import { Agent } from './models';
 
 // reactstrap components
 import {
@@ -13,6 +15,7 @@ import {
     Row,
     Col,
   } from "reactstrap";
+
 
 function AddAgent() {
     return (
