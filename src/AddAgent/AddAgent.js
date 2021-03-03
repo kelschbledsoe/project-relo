@@ -1,6 +1,8 @@
 import React, { useReducer, useState } from 'react';
 import { DataStore } from '@aws-amplify/datastore';
+import { API, graphqlOperation } from 'aws-amplify'
 import { Agent } from './../models';
+import { listAgents } from './../graphql/queries'
 
 // reactstrap components
 import {
@@ -48,9 +50,12 @@ function AddAgent() {
   }
   async function queryAgent()
   {
-    const models = await DataStore.query(Agent);
+    //const models = await DataStore.query(Agent);
+    const models = await API.graphql(graphqlOperation(listAgents))
+    const listofagents = models.data.listAgents.items
     console.log("working");
-    console.log(models);
+    console.log(listofagents);
+    console.log(listofagents[0].firstName)
   }
 
   const [formData, setFormData] = useReducer(formReducer, {});

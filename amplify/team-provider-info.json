@@ -1,0 +1,15 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-relo123-staging-234826-authRole",
+      "UnauthRoleArn": "arn:aws:iam::840027135642:role/amplify-relo123-staging-234826-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::840027135642:role/amplify-relo123-staging-234826-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-relo123-staging-234826-deployment",
+      "UnauthRoleName": "amplify-relo123-staging-234826-unauthRole",
+      "StackName": "amplify-relo123-staging-234826",
+      "StackId": "arn:aws:cloudformation:us-east-2:840027135642:stack/amplify-relo123-staging-234826/f5162790-77c3-11eb-b80e-0a9e4daac7b4",
+      "AmplifyAppId": "d2racs7z0nsmwm"
+    }
+  }
+}
