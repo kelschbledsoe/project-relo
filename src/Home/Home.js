@@ -60,7 +60,12 @@ export default function Home(){
                       </thead>
                       <tbody>
                         {//Need to make key that auto inc for the agent ID. Also need status part
-                        agents.map(function(agent,index){return(<tr>
+                        agents.map(function(agent,index)
+                        {
+                          if(agent.lastName === "Amet" || agent.lastName === "deployed" || agent.lastName === "test"){
+                            return;
+                          }
+                          return(<tr>
                           <td>{index}</td>
                           <td>{agent.lastName}</td>
                           <td>In Progress</td>
