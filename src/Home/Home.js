@@ -53,8 +53,9 @@ export default function Home(){
                       <thead className="text-primary">
                         <tr>
                           <th>ID</th>
-                          <th>Last Name</th>
+                          <th>Name</th>
                           <th>Company</th>
+                          <th>Email</th>
                           <th>Select for detail</th>
                         </tr>
                       </thead>
@@ -67,8 +68,9 @@ export default function Home(){
                           }
                           return(<tr>
                           <td>{index}</td>
-                          <td>{agent.lastName}</td>
-                          <td>Quicken Loans</td>
+                          <td>{agent.firstName} {agent.lastName}</td>
+                          <td>{agent.companyName}</td>
+                          <td>{agent.email}</td>
                           <td><Button href="/AgentDetail" color="warning">Detail</Button></td>
                         </tr>)})}
                       </tbody>
