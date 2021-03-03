@@ -12,18 +12,20 @@ const Navigation = (props) => {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                     <Nav.Link href="/">Home</Nav.Link>
-                    <Nav.Link href="/Login">Login(Incomplete)</Nav.Link>
+                    <Nav.Link href="/">Admin:</Nav.Link>
+                    <Nav.Link href="/AddAgent">Add Agent</Nav.Link>
+                    <Nav.Link href="/AddCompany">Add Company</Nav.Link>
+                    <Nav.Link href="/AgentDetail">Agent Detail</Nav.Link>
+                    <Nav.Link href="/Search">Search</Nav.Link>
+                    <Nav.Link href="/">{""}</Nav.Link>
+                    <Nav.Link href="/">{""}</Nav.Link>
+                    <Nav.Link href="/">{""}</Nav.Link>
+
+                    <Nav.Link href="/">Agent:</Nav.Link>
                     <Nav.Link href="/NewRequest">New Request</Nav.Link>
                     <Nav.Link href="/ClientList">Client List</Nav.Link>
-                    <Nav.Link href="/Search">Search (Admin)</Nav.Link>
-                    <Nav.Link href="/AddAgent">Add Agent (Admin)</Nav.Link>
-                    <Nav.Link href="/AddCompany">Add Company (Admin)</Nav.Link>
-                    <Nav.Link href="/ClientDetail">Client Detail (Agent)</Nav.Link>
-                    <Nav.Link href="/CompanyDetail">Company Detail (Agent)</Nav.Link>
-                    
-                    
-
-
+                    <Nav.Link href="/ClientDetail">Client Detail</Nav.Link>
+                    <Nav.Link href="/CompanyDetail">Company Detail</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

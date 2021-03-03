@@ -45,7 +45,7 @@ export default function Home(){
                 <Card>
                   <CardHeader>
                     <CardTitle tag='h1'>Welcome to Project Relo</CardTitle>
-                    <CardTitle tag="h4">Recent Clients</CardTitle>
+                    <CardTitle tag="h4">Recent Agents</CardTitle>
                   </CardHeader>
                   <CardBody>
                     {isLoaded ? (
@@ -53,7 +53,7 @@ export default function Home(){
                       <thead className="text-primary">
                         <tr>
                           <th>ID</th>
-                          <th>Name</th>
+                          <th>Last Name</th>
                           <th>Status</th>
                           <th>Select for detail</th>
                         </tr>
@@ -64,7 +64,7 @@ export default function Home(){
                           <td>{index}</td>
                           <td>{agent.lastName}</td>
                           <td>In Progress</td>
-                          <td><Button href="/ClientDetail" color="warning">Detail</Button></td>
+                          <td><Button href="/AgentDetail" color="warning">Detail</Button></td>
                         </tr>)})}
                       </tbody>
                     </Table>
@@ -77,14 +77,13 @@ export default function Home(){
               <Col lg="12" md="12">
                 <Card>
                   <CardHeader>
-                    <CardTitle tag="h4">Recent Mortgage Requests</CardTitle>
+                    <CardTitle tag="h4">Recent Companies</CardTitle>
                   </CardHeader>
                   <CardBody>
                     <Table className="tablesorter" bordered>
                       <thead className="text-primary">
                         <tr>
                           <th>ID</th>
-                          <th>Name</th>
                           <th>Company</th>
                           <th>Status</th>
                           <th>Select for detail</th>
@@ -92,22 +91,19 @@ export default function Home(){
                       </thead>
                       <tbody>
                         <tr>
-                          <td>23</td>
-                          <td>Jackson</td>
+                          <td>21</td>
                           <td>Quicken Loans</td>
                           <td>In Progress</td>
                           <td><Button href="/CompanyDetail" color="warning">Detail</Button></td>
                         </tr>
                         <tr>
-                          <td>21</td>
-                          <td>Jackson</td>
+                          <td>22</td>
                           <td>Chase</td>
                           <td>In Progress</td>
                           <td><Button href="/CompanyDetail" color="warning">Detail</Button></td>
                         </tr>
                         <tr>
-                          <td>20</td>
-                          <td>Price</td>
+                          <td>23</td>
                           <td>PNC Bank</td>
                           <td>In Progress</td>
                           <td><Button href="/CompanyDetail" color="warning">Detail</Button></td>

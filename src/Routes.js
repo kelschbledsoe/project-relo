@@ -11,6 +11,7 @@ import ClientDetail from "./ClientDetail/ClientDetail"
 import CompanyDetail from "./CompanyDetail/CompanyDetail"
 import Search from "./Search/Search"
 import Login from "./Login/Login"
+import AgentDetail from "./AgentDetail/AgentDetail"
 
 export default class Routes extends Component {
     render() {
@@ -26,6 +27,7 @@ export default class Routes extends Component {
                     <Route path="/CompanyDetail" component={CompanyDetail}/>
                     <Route path="/Search" component={Search}/>
                     <Route path="/Login" component={Login}/>
+                    <Route path="/AgentDetail" component={AgentDetail}/>
                 </Switch>
             </Router>
         )
