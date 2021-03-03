@@ -54,7 +54,7 @@ export default function Home(){
                         <tr>
                           <th>ID</th>
                           <th>Last Name</th>
-                          <th>Status</th>
+                          <th>Company</th>
                           <th>Select for detail</th>
                         </tr>
                       </thead>
@@ -68,7 +68,7 @@ export default function Home(){
                           return(<tr>
                           <td>{index}</td>
                           <td>{agent.lastName}</td>
-                          <td>In Progress</td>
+                          <td>Quicken Loans</td>
                           <td><Button href="/AgentDetail" color="warning">Detail</Button></td>
                         </tr>)})}
                       </tbody>
@@ -90,7 +90,7 @@ export default function Home(){
                         <tr>
                           <th>ID</th>
                           <th>Company</th>
-                          <th>Status</th>
+                          <th>Method</th>
                           <th>Select for detail</th>
                         </tr>
                       </thead>
@@ -98,19 +98,19 @@ export default function Home(){
                         <tr>
                           <td>21</td>
                           <td>Quicken Loans</td>
-                          <td>In Progress</td>
+                          <td>API</td>
                           <td><Button href="/CompanyDetail" color="warning">Detail</Button></td>
                         </tr>
                         <tr>
                           <td>22</td>
                           <td>Chase</td>
-                          <td>In Progress</td>
+                          <td>Email</td>
                           <td><Button href="/CompanyDetail" color="warning">Detail</Button></td>
                         </tr>
                         <tr>
                           <td>23</td>
                           <td>PNC Bank</td>
-                          <td>In Progress</td>
+                          <td>Email</td>
                           <td><Button href="/CompanyDetail" color="warning">Detail</Button></td>
                         </tr>
                       </tbody>
