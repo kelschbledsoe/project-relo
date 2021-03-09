@@ -2,6 +2,7 @@ import React, { useReducer, useState } from 'react';
 import {Card, CardHeader, 
   CardBody, Row, Col, Button, 
   Form, FormGroup, Label, Input} from 'reactstrap';
+import emailjs from 'emailjs-com';
 
   // State object logic
 const formReducer = (state, event) => {
@@ -25,6 +26,39 @@ const formReducer = (state, event) => {
   }
 }
 function NewRequest() {
+
+    //email functionality
+    function emailSubmit (event) {
+      //email template for new request
+      const templateId = 'template_gqywhbk';
+      // info from form being sent
+      const firstName = formData.First;
+      const lastName = formData.Last;
+      const phone = formData.Phone;
+      const email = formData.Email;
+      const address = formData.Address;
+      const city = formData.City;
+      const state = formData.State;
+      const zip = formData.Zip;
+      const newLocation = formData.New;
+      const company = formData.Company;
+      //call to send email with the employee info
+      sendFeedback(templateId, {message: "We have a new relocation mortgage request", from_name: "Project Relo", firstName: firstName, lastName: lastName, 
+                                phone: phone, email: email, address: address, city: city, state: state, zip: zip, newLocation: newLocation, company: company, reply_to: "jishwan2164@gmail.com"})
+      }
+    
+    function sendFeedback (templateId, variables) {
+      //send requires service ID, template ID, variables, and user ID
+      emailjs.send(
+        'service_nwwf8mp', templateId,
+        variables, "user_2LtqO9jdrkvzl5Bgazia8"
+        ).then(res => {
+          console.log('Email successfully sent!')
+        })
+        // Handle errors here however you like, or use a React error boundary
+        .catch(err => console.error('Oh well, you failed. Here some thoughts on the error that occured:', err))
+    }
+
   const [formData, setFormData] = useReducer(formReducer, {});
   // This event is the Submit button behavior. Has a cool down period to let the API catch up then has a JS alert box.
   const [submitting, setSubmitting] = useState(false);
@@ -175,7 +209,7 @@ function NewRequest() {
                     </Col>
                   </FormGroup>
                   <Button color="warning" href='/'>Back</Button>{' '}
-                  <Button color="warning" type="submit">Submit</Button>
+                  <Button onClick={emailSubmit} color="warning" type="submit">Submit</Button>
                   </Form>
                   
                   </div>
