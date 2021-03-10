@@ -40,8 +40,8 @@ function AddCompany() {
   {
       const createCompany = 
       {
-        name: "TAPA",
-        email: "TAPA@email.com",
+        name: formData.Company,
+        email: formData.Email,
         
       };
 
@@ -58,7 +58,7 @@ function AddCompany() {
     console.log(listofCompanies);
   }
 
-    const [formData, setFormData] = useReducer(formReducer, {});
+  const [formData, setFormData] = useReducer(formReducer, {});
   // This event is the Submit button behavior. Has a cool down period to let the API catch up then has a JS alert box.
   const [submitting, setSubmitting] = useState(false);
   const handleSubmit = event => {
@@ -133,7 +133,8 @@ function AddCompany() {
                     <Col sm={10}>
                       <Input type="select" name="Method"
                       onChange={handleChange}
-                      value={formData.Company || ''}>
+                      value={formData.Method || ''}>
+                        <option>Please select an option</option>
                         <option>API</option>
                         <option>Email</option>
                       </Input>
@@ -141,11 +142,10 @@ function AddCompany() {
                   </FormGroup>
                     <CardFooter>
                       <Button color="warning" href='/'>Back</Button>{' '}
-                      <Button className="btn-fill" color="warning" type="submit">
+                      <Button className="btn-fill" color="warning" type="submit" onClick={createCompany}>
                         Submit
                       </Button>
-                      <button onClick={createCompany}>Create Company </button>
-                      <button onClick={queryCompany}>Query Company </button>
+                      {/* <button onClick={queryCompany}>Query Company </button> */}
                     </CardFooter>
                   </Form>
                 </CardBody>

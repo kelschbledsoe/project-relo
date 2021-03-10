@@ -2,6 +2,8 @@ import "./Home.css";
 import React, { useState, useEffect } from 'react';
 import { API, graphqlOperation } from 'aws-amplify'
 import { listAgents } from './../graphql/queries'
+import { listCompanys } from './../graphql/queries'
+
 
 import {
   Button,
@@ -19,8 +21,10 @@ import {
 
 export default function Home(){
   const [agents, setAgents] = useState([])
+  const [companys, setCompanys] = useState([])
   const [isLoaded, setIsLoaded] = useState(false)
   let listofagents;
+  let listofcompanys;
   // render page
   useEffect(() => {
     async function queryAgent(){
@@ -33,6 +37,19 @@ export default function Home(){
       }
     }
     queryAgent()
+  }, [setIsLoaded])
+
+  useEffect(() => {
+    async function queryCompany(){
+      /* make page take longer to load await new Promise(x=>setTimeout(x,10000)) */
+      const models = await API.graphql(graphqlOperation(listCompanys))
+      listofcompanys = models.data.listCompanys.items
+      if(listofcompanys){
+        setCompanys(listofcompanys);
+        setIsLoaded(true);
+      }
+    }
+    queryCompany()
   }, [setIsLoaded])
   
     return (
@@ -63,7 +80,7 @@ export default function Home(){
                         {//Need to make key that auto inc for the agent ID. Also need status part
                         agents.map(function(agent,index)
                         {
-                          if(agent.lastName === "Amet" || agent.lastName === "deployed" || agent.lastName === "test"){
+                          if(agent.lastName === "Amet" || agent.lastName === "deployed" || agent.lastName === "test" || agent.firstName === "Jewelyan" || agent.firstName === "" || agent.companyName === "qcki"){
                             return;
                           }
                           return(<tr>
@@ -92,29 +109,25 @@ export default function Home(){
                         <tr>
                           <th>ID</th>
                           <th>Company</th>
+                          <th>Company Email</th>
                           <th>Method</th>
                           <th>Select for detail</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>21</td>
-                          <td>Quicken Loans</td>
-                          <td>API</td>
-                          <td><Button href="/CompanyDetail" color="warning">Detail</Button></td>
-                        </tr>
-                        <tr>
-                          <td>22</td>
-                          <td>Chase</td>
+                        {//Need to make key that auto inc for the agent ID. Also need status part
+                        companys.map(function(company,index)
+                        {
+                          if(company.name === "TAPA" || company.name === "Co." || company.name === "" || company.name === "bb"){
+                            return;
+                          }
+                          return(<tr>
+                          <td>{index+4}</td>
+                          <td>{company.name}</td>
+                          <td>{company.email}</td>
                           <td>Email</td>
                           <td><Button href="/CompanyDetail" color="warning">Detail</Button></td>
-                        </tr>
-                        <tr>
-                          <td>23</td>
-                          <td>PNC Bank</td>
-                          <td>Email</td>
-                          <td><Button href="/CompanyDetail" color="warning">Detail</Button></td>
-                        </tr>
+                        </tr>)})}
                       </tbody>
                     </Table>
                   </CardBody>
