@@ -27,6 +27,7 @@ export declare class Company {
   readonly id: string;
   readonly name?: string;
   readonly email?: string;
+  readonly requestMethod?: string;
   constructor(init: ModelInit<Company>);
   static copyOf(source: Company, mutator: (draft: MutableModel<Company>) => MutableModel<Company> | void): Company;
 }

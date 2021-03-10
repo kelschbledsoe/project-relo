@@ -118,14 +118,14 @@ export default function Home(){
                         {//Need to make key that auto inc for the agent ID. Also need status part
                         companys.map(function(company,index)
                         {
-                          if(company.name === "TAPA" || company.name === "Co." || company.name === "" || company.name === "bb"){
+                          if(company.name === "TAPA" || company.name === "Co." || company.name === "" || company.name === "bb" || company.email === "mortgage.requests@quickenloans.com"){
                             return;
                           }
                           return(<tr>
                           <td>{index+4}</td>
                           <td>{company.name}</td>
                           <td>{company.email}</td>
-                          <td>Email</td>
+                          <td>{company.requestMethod}</td>
                           <td><Button href="/CompanyDetail" color="warning">Detail</Button></td>
                         </tr>)})}
                       </tbody>

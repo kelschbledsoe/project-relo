@@ -13,18 +13,17 @@ type Agent @model @auth(rules: [{allow: public}]) {
   email: String
 }
 
-type Company @model @auth(rules:[{allow: public}])
-{
-  id:ID!
+type Company @model @auth(rules: [{allow: public}]) {
+  id: ID!
   name: String
   email: String
+  requestMethod: String
 }
 
-type MortgageRequest @model @auth(rules: [{allow: public}])
-{
+type MortgageRequest @model @auth(rules: [{allow: public}]) {
   id: ID!
   status: Int
   relocationId: ID
   mortgageId: ID
 }
-
+ 

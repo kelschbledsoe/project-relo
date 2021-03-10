@@ -42,7 +42,7 @@ function AddCompany() {
       {
         name: formData.Company,
         email: formData.Email,
-        
+        requestMethod: formData.Method,
       };
 
       const newCompany = await API.graphql({ query: mutations.createCompany, variables:{input: createCompany}});
@@ -134,7 +134,7 @@ function AddCompany() {
                       <Input type="select" name="Method"
                       onChange={handleChange}
                       value={formData.Method || ''}>
-                        <option>Please select an option</option>
+                        <option></option>
                         <option>API</option>
                         <option>Email</option>
                       </Input>

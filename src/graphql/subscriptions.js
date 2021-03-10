@@ -100,6 +100,7 @@ export const onCreateCompany = /* GraphQL */ `
       id
       name
       email
+      requestMethod
       _version
       _deleted
       _lastChangedAt
@@ -114,6 +115,7 @@ export const onUpdateCompany = /* GraphQL */ `
       id
       name
       email
+      requestMethod
       _version
       _deleted
       _lastChangedAt
@@ -128,6 +130,7 @@ export const onDeleteCompany = /* GraphQL */ `
       id
       name
       email
+      requestMethod
       _version
       _deleted
       _lastChangedAt
