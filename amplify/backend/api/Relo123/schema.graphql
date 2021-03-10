@@ -1,7 +1,30 @@
+type RelocationAgent @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  agentName: String
+  relocationId: ID
+  companyId: ID
+}
+
 type Agent @model @auth(rules: [{allow: public}]) {
   id: ID!
-  firstName: String!
-  lastName: String!
-  companyName: String!
-  email: String!
+  firstName: String
+  lastName: String
+  companyName: String
+  email: String
 }
+
+type Company @model @auth(rules:[{allow: public}])
+{
+  id:ID!
+  name: String
+  email: String
+}
+
+type MortgageRequest @model @auth(rules: [{allow: public}])
+{
+  id: ID!
+  status: Int
+  relocationId: ID
+  mortgageId: ID
+}
+

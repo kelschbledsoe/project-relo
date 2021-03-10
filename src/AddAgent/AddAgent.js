@@ -3,6 +3,8 @@ import { DataStore } from '@aws-amplify/datastore';
 import { API, graphqlOperation } from 'aws-amplify'
 import { Agent } from './../models';
 import { listAgents } from './../graphql/queries'
+import * as mutations from './../graphql/mutations';
+
 
 // reactstrap components
 import {
@@ -39,14 +41,14 @@ function AddAgent() {
   // These async functions are for the API
   async function createAgent()
   {
-    await DataStore.save(
-      new Agent({
-      "firstName": formData.First,
-      "lastName": formData.Last,
-      "companyName": formData.Company,
-      "email": formData.Email
-    })
-  );
+    const createAgent = {
+      firstName: formData.First,
+      lastName: formData.Last,
+      companyName: formData.Company,
+      email: formData.Email
+    };
+    const newAgent = await API.graphql({ query: mutations.createAgent, variables:{input: createAgent}});
+
   }
   async function queryAgent()
   {

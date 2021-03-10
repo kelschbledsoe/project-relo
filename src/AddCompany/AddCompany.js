@@ -1,4 +1,8 @@
 import React, { useReducer, useState } from "react";
+import { API, graphqlOperation } from 'aws-amplify'
+import { Company } from './../models';
+import { listCompanys } from './../graphql/queries';
+import * as mutations from './../graphql/mutations';
 
 // reactstrap components
 import {
@@ -31,6 +35,28 @@ const formReducer = (state, event) => {
 }
 
 function AddCompany() {
+
+  async function createCompany()
+  {
+      const createCompany = 
+      {
+        name: "TAPA",
+        email: "TAPA@email.com",
+        
+      };
+
+      const newCompany = await API.graphql({ query: mutations.createCompany, variables:{input: createCompany}});
+      console.log(newCompany);
+  }
+
+  async function queryCompany()
+  {
+    //const models = await DataStore.query(Agent);
+    const models = await API.graphql(graphqlOperation(listCompanys))
+    const listofCompanies = models.data.listCompanys.items
+    console.log("Co.");
+    console.log(listofCompanies);
+  }
 
     const [formData, setFormData] = useReducer(formReducer, {});
   // This event is the Submit button behavior. Has a cool down period to let the API catch up then has a JS alert box.
@@ -118,6 +144,8 @@ function AddCompany() {
                       <Button className="btn-fill" color="warning" type="submit">
                         Submit
                       </Button>
+                      <button onClick={createCompany}>Create Company </button>
+                      <button onClick={queryCompany}>Query Company </button>
                     </CardFooter>
                   </Form>
                 </CardBody>
