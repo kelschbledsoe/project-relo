@@ -1,6 +1,159 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createUpdate = /* GraphQL */ `
+  mutation CreateUpdate(
+    $input: CreateUpdateInput!
+    $condition: ModelUpdateConditionInput
+  ) {
+    createUpdate(input: $input, condition: $condition) {
+      id
+      detai
+      date
+      updateId
+      mortgagerequestID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUpdate = /* GraphQL */ `
+  mutation UpdateUpdate(
+    $input: UpdateUpdateInput!
+    $condition: ModelUpdateConditionInput
+  ) {
+    updateUpdate(input: $input, condition: $condition) {
+      id
+      detai
+      date
+      updateId
+      mortgagerequestID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUpdate = /* GraphQL */ `
+  mutation DeleteUpdate(
+    $input: DeleteUpdateInput!
+    $condition: ModelUpdateConditionInput
+  ) {
+    deleteUpdate(input: $input, condition: $condition) {
+      id
+      detai
+      date
+      updateId
+      mortgagerequestID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createClient = /* GraphQL */ `
+  mutation CreateClient(
+    $input: CreateClientInput!
+    $condition: ModelClientConditionInput
+  ) {
+    createClient(input: $input, condition: $condition) {
+      id
+      firstName
+      lastName
+      clientId
+      agentId
+      phone
+      email
+      curAddress
+      curCity
+      curState
+      curZip
+      newLocation
+      status
+      agentID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+      MortgageRequests {
+        nextToken
+        startedAt
+      }
+    }
+  }
+`;
+export const updateClient = /* GraphQL */ `
+  mutation UpdateClient(
+    $input: UpdateClientInput!
+    $condition: ModelClientConditionInput
+  ) {
+    updateClient(input: $input, condition: $condition) {
+      id
+      firstName
+      lastName
+      clientId
+      agentId
+      phone
+      email
+      curAddress
+      curCity
+      curState
+      curZip
+      newLocation
+      status
+      agentID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+      MortgageRequests {
+        nextToken
+        startedAt
+      }
+    }
+  }
+`;
+export const deleteClient = /* GraphQL */ `
+  mutation DeleteClient(
+    $input: DeleteClientInput!
+    $condition: ModelClientConditionInput
+  ) {
+    deleteClient(input: $input, condition: $condition) {
+      id
+      firstName
+      lastName
+      clientId
+      agentId
+      phone
+      email
+      curAddress
+      curCity
+      curState
+      curZip
+      newLocation
+      status
+      agentID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+      MortgageRequests {
+        nextToken
+        startedAt
+      }
+    }
+  }
+`;
 export const createRelocationAgent = /* GraphQL */ `
   mutation CreateRelocationAgent(
     $input: CreateRelocationAgentInput!
@@ -66,11 +219,17 @@ export const createAgent = /* GraphQL */ `
       lastName
       companyName
       email
+      status
+      agentId
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
+      Clients {
+        nextToken
+        startedAt
+      }
     }
   }
 `;
@@ -85,11 +244,17 @@ export const updateAgent = /* GraphQL */ `
       lastName
       companyName
       email
+      status
+      agentId
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
+      Clients {
+        nextToken
+        startedAt
+      }
     }
   }
 `;
@@ -104,11 +269,17 @@ export const deleteAgent = /* GraphQL */ `
       lastName
       companyName
       email
+      status
+      agentId
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
+      Clients {
+        nextToken
+        startedAt
+      }
     }
   }
 `;
@@ -122,6 +293,7 @@ export const createCompany = /* GraphQL */ `
       name
       email
       requestMethod
+      companyId
       _version
       _deleted
       _lastChangedAt
@@ -140,6 +312,7 @@ export const updateCompany = /* GraphQL */ `
       name
       email
       requestMethod
+      companyId
       _version
       _deleted
       _lastChangedAt
@@ -158,6 +331,7 @@ export const deleteCompany = /* GraphQL */ `
       name
       email
       requestMethod
+      companyId
       _version
       _deleted
       _lastChangedAt
@@ -176,11 +350,18 @@ export const createMortgageRequest = /* GraphQL */ `
       status
       relocationId
       mortgageId
+      clientId
+      agentId
+      clientID
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
+      Updates {
+        nextToken
+        startedAt
+      }
     }
   }
 `;
@@ -194,11 +375,18 @@ export const updateMortgageRequest = /* GraphQL */ `
       status
       relocationId
       mortgageId
+      clientId
+      agentId
+      clientID
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
+      Updates {
+        nextToken
+        startedAt
+      }
     }
   }
 `;
@@ -212,11 +400,18 @@ export const deleteMortgageRequest = /* GraphQL */ `
       status
       relocationId
       mortgageId
+      clientId
+      agentId
+      clientID
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
+      Updates {
+        nextToken
+        startedAt
+      }
     }
   }
 `;

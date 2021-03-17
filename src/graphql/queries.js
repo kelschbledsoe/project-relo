@@ -1,6 +1,177 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getUpdate = /* GraphQL */ `
+  query GetUpdate($id: ID!) {
+    getUpdate(id: $id) {
+      id
+      detai
+      date
+      updateId
+      mortgagerequestID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUpdates = /* GraphQL */ `
+  query ListUpdates(
+    $filter: ModelUpdateFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUpdates(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        detai
+        date
+        updateId
+        mortgagerequestID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncUpdates = /* GraphQL */ `
+  query SyncUpdates(
+    $filter: ModelUpdateFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncUpdates(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        detai
+        date
+        updateId
+        mortgagerequestID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getClient = /* GraphQL */ `
+  query GetClient($id: ID!) {
+    getClient(id: $id) {
+      id
+      firstName
+      lastName
+      clientId
+      agentId
+      phone
+      email
+      curAddress
+      curCity
+      curState
+      curZip
+      newLocation
+      status
+      agentID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+      MortgageRequests {
+        nextToken
+        startedAt
+      }
+    }
+  }
+`;
+export const listClients = /* GraphQL */ `
+  query ListClients(
+    $filter: ModelClientFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listClients(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        firstName
+        lastName
+        clientId
+        agentId
+        phone
+        email
+        curAddress
+        curCity
+        curState
+        curZip
+        newLocation
+        status
+        agentID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncClients = /* GraphQL */ `
+  query SyncClients(
+    $filter: ModelClientFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncClients(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        firstName
+        lastName
+        clientId
+        agentId
+        phone
+        email
+        curAddress
+        curCity
+        curState
+        curZip
+        newLocation
+        status
+        agentID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const getRelocationAgent = /* GraphQL */ `
   query GetRelocationAgent($id: ID!) {
     getRelocationAgent(id: $id) {
@@ -80,11 +251,17 @@ export const getAgent = /* GraphQL */ `
       lastName
       companyName
       email
+      status
+      agentId
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
+      Clients {
+        nextToken
+        startedAt
+      }
     }
   }
 `;
@@ -101,6 +278,8 @@ export const listAgents = /* GraphQL */ `
         lastName
         companyName
         email
+        status
+        agentId
         _version
         _deleted
         _lastChangedAt
@@ -131,6 +310,8 @@ export const syncAgents = /* GraphQL */ `
         lastName
         companyName
         email
+        status
+        agentId
         _version
         _deleted
         _lastChangedAt
@@ -149,6 +330,7 @@ export const getCompany = /* GraphQL */ `
       name
       email
       requestMethod
+      companyId
       _version
       _deleted
       _lastChangedAt
@@ -169,6 +351,7 @@ export const listCompanys = /* GraphQL */ `
         name
         email
         requestMethod
+        companyId
         _version
         _deleted
         _lastChangedAt
@@ -198,6 +381,7 @@ export const syncCompanies = /* GraphQL */ `
         name
         email
         requestMethod
+        companyId
         _version
         _deleted
         _lastChangedAt
@@ -216,11 +400,18 @@ export const getMortgageRequest = /* GraphQL */ `
       status
       relocationId
       mortgageId
+      clientId
+      agentId
+      clientID
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
+      Updates {
+        nextToken
+        startedAt
+      }
     }
   }
 `;
@@ -240,6 +431,9 @@ export const listMortgageRequests = /* GraphQL */ `
         status
         relocationId
         mortgageId
+        clientId
+        agentId
+        clientID
         _version
         _deleted
         _lastChangedAt
@@ -269,6 +463,9 @@ export const syncMortgageRequests = /* GraphQL */ `
         status
         relocationId
         mortgageId
+        clientId
+        agentId
+        clientID
         _version
         _deleted
         _lastChangedAt

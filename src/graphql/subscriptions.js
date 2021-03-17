@@ -1,6 +1,141 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateUpdate = /* GraphQL */ `
+  subscription OnCreateUpdate {
+    onCreateUpdate {
+      id
+      detai
+      date
+      updateId
+      mortgagerequestID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUpdate = /* GraphQL */ `
+  subscription OnUpdateUpdate {
+    onUpdateUpdate {
+      id
+      detai
+      date
+      updateId
+      mortgagerequestID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUpdate = /* GraphQL */ `
+  subscription OnDeleteUpdate {
+    onDeleteUpdate {
+      id
+      detai
+      date
+      updateId
+      mortgagerequestID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateClient = /* GraphQL */ `
+  subscription OnCreateClient {
+    onCreateClient {
+      id
+      firstName
+      lastName
+      clientId
+      agentId
+      phone
+      email
+      curAddress
+      curCity
+      curState
+      curZip
+      newLocation
+      status
+      agentID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+      MortgageRequests {
+        nextToken
+        startedAt
+      }
+    }
+  }
+`;
+export const onUpdateClient = /* GraphQL */ `
+  subscription OnUpdateClient {
+    onUpdateClient {
+      id
+      firstName
+      lastName
+      clientId
+      agentId
+      phone
+      email
+      curAddress
+      curCity
+      curState
+      curZip
+      newLocation
+      status
+      agentID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+      MortgageRequests {
+        nextToken
+        startedAt
+      }
+    }
+  }
+`;
+export const onDeleteClient = /* GraphQL */ `
+  subscription OnDeleteClient {
+    onDeleteClient {
+      id
+      firstName
+      lastName
+      clientId
+      agentId
+      phone
+      email
+      curAddress
+      curCity
+      curState
+      curZip
+      newLocation
+      status
+      agentID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+      MortgageRequests {
+        nextToken
+        startedAt
+      }
+    }
+  }
+`;
 export const onCreateRelocationAgent = /* GraphQL */ `
   subscription OnCreateRelocationAgent {
     onCreateRelocationAgent {
@@ -54,11 +189,17 @@ export const onCreateAgent = /* GraphQL */ `
       lastName
       companyName
       email
+      status
+      agentId
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
+      Clients {
+        nextToken
+        startedAt
+      }
     }
   }
 `;
@@ -70,11 +211,17 @@ export const onUpdateAgent = /* GraphQL */ `
       lastName
       companyName
       email
+      status
+      agentId
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
+      Clients {
+        nextToken
+        startedAt
+      }
     }
   }
 `;
@@ -86,11 +233,17 @@ export const onDeleteAgent = /* GraphQL */ `
       lastName
       companyName
       email
+      status
+      agentId
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
+      Clients {
+        nextToken
+        startedAt
+      }
     }
   }
 `;
@@ -101,6 +254,7 @@ export const onCreateCompany = /* GraphQL */ `
       name
       email
       requestMethod
+      companyId
       _version
       _deleted
       _lastChangedAt
@@ -116,6 +270,7 @@ export const onUpdateCompany = /* GraphQL */ `
       name
       email
       requestMethod
+      companyId
       _version
       _deleted
       _lastChangedAt
@@ -131,6 +286,7 @@ export const onDeleteCompany = /* GraphQL */ `
       name
       email
       requestMethod
+      companyId
       _version
       _deleted
       _lastChangedAt
@@ -146,11 +302,18 @@ export const onCreateMortgageRequest = /* GraphQL */ `
       status
       relocationId
       mortgageId
+      clientId
+      agentId
+      clientID
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
+      Updates {
+        nextToken
+        startedAt
+      }
     }
   }
 `;
@@ -161,11 +324,18 @@ export const onUpdateMortgageRequest = /* GraphQL */ `
       status
       relocationId
       mortgageId
+      clientId
+      agentId
+      clientID
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
+      Updates {
+        nextToken
+        startedAt
+      }
     }
   }
 `;
@@ -176,11 +346,18 @@ export const onDeleteMortgageRequest = /* GraphQL */ `
       status
       relocationId
       mortgageId
+      clientId
+      agentId
+      clientID
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
+      Updates {
+        nextToken
+        startedAt
+      }
     }
   }
 `;
