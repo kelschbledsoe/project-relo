@@ -17,6 +17,7 @@ const Navigation = (props) => {
                     <Nav.Link href="/AddCompany">Add Company</Nav.Link>
                     <Nav.Link href="/AgentDetail">Agent Detail</Nav.Link>
                     <Nav.Link href="/Search">Search</Nav.Link>
+                    <Nav.Link href="/AdminCompanyDetail">Company Detail (Admin)</Nav.Link>
                     <Nav.Link href="/">{""}</Nav.Link>
                     <Nav.Link href="/">{""}</Nav.Link>
                     <Nav.Link href="/">{""}</Nav.Link>
@@ -25,7 +26,7 @@ const Navigation = (props) => {
                     <Nav.Link href="/NewRequest">New Request</Nav.Link>
                     <Nav.Link href="/ClientList">Client List</Nav.Link>
                     <Nav.Link href="/ClientDetail">Client Detail</Nav.Link>
-                    <Nav.Link href="/CompanyDetail">Company Detail</Nav.Link>
+                    <Nav.Link href="/CompanyDetail">Company Detail (Agent)</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

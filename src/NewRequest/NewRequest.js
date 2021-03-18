@@ -1,8 +1,11 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useState, Component } from 'react';
 import {Card, CardHeader, 
   CardBody, Row, Col, Button, 
   Form, FormGroup, Label, Input} from 'reactstrap';
 import emailjs from 'emailjs-com';
+
+
+
 
   // State object logic
 const formReducer = (state, event) => {
@@ -25,7 +28,33 @@ const formReducer = (state, event) => {
     [event.name]: event.value
   }
 }
+
+
 function NewRequest() {
+    //Setting Confirmation Statement for adding new request
+    function confirmationTemplate(){
+      const firstName = formData.First;
+      const lastName = formData.Last;
+      const phone = formData.Phone;
+      const email = formData.Email;
+      const address = formData.Address;
+      const city = formData.City;
+      const state = formData.State;
+      const zip = formData.Zip;
+      const newLocation = formData.New;
+      const company = formData.Company;
+
+      var confirmationMessage = 'Please confirm all the information filled is correct.\nYou are submitting the following \n\n' + 
+                                'First Name: ' + firstName + '\n' + 
+                                'Last Name: ' + lastName + '\n' + 
+                                'Phone Number: ' + phone + '\n' +
+                                'Email Address: ' + email + '\n' +
+                                'Address: ' + address + ' ' + city + ', ' + state + zip + '\n' + 
+                                'New Location: ' + newLocation + '\n' +
+                                'Sending Request to: ' + company;
+      return confirmationMessage;
+    }
+    
 
     //email functionality
     function emailSubmit (event) {
@@ -44,7 +73,8 @@ function NewRequest() {
       const company = formData.Company;
       //call to send email with the employee info
       sendFeedback(templateId, {message: "We have a new relocation mortgage request", from_name: "Project Relo", firstName: firstName, lastName: lastName, 
-                                phone: phone, email: email, address: address, city: city, state: state, zip: zip, newLocation: newLocation, company: company, reply_to: "jishwan2164@gmail.com"})
+                                phone: phone, email: email, address: address, city: city, state: state, 
+                                zip: zip, newLocation: newLocation, company: company, reply_to: "jishwan2164@gmail.com"})
       }
     
     function sendFeedback (templateId, variables) {
@@ -79,6 +109,8 @@ function NewRequest() {
       value: event.target.value,
     });
   }
+
+  
     return (
       <>
         <div className="content">
@@ -87,7 +119,7 @@ function NewRequest() {
               <Card className="card-plain">
                 <CardHeader tag='h2'>New Request</CardHeader>
                 <CardHeader>Please complete all fields to submit your request.</CardHeader>
-                {submitting &&
+                {/* {submitting &&
                   <div>
                   You are submitting the following:
                   <ul>
@@ -96,7 +128,7 @@ function NewRequest() {
                     ))}
                   </ul>
                 </div>
-                }
+                } */}
                 <CardBody>
                   <div
                     id="NewRequest"
@@ -111,7 +143,7 @@ function NewRequest() {
                           <Input type="text" name="First" id="firstName" placeholder="First Name" 
                           onChange={handleChange}
                           value={formData.First || ''}
-                          required/>
+                          />
                         </FormGroup>
                       </Col>
                       <Col md={3}>
@@ -120,7 +152,7 @@ function NewRequest() {
                           <Input type="text" name="Last" id="lastName" placeholder="Last Name" 
                           onChange={handleChange}
                           value={formData.Last || ''}
-                          required/>
+                          />
                         </FormGroup>
                       </Col>
                       <Col md={6}>
@@ -129,7 +161,7 @@ function NewRequest() {
                           <Input type="text" name="Phone" id="examplePassword" placeholder="Phone Number" maxLength="10" 
                           onChange={handleChange}
                           value={formData.Phone || ''}
-                          required/>
+                          />
                         </FormGroup>
                       </Col>
                     </Row>
@@ -140,7 +172,7 @@ function NewRequest() {
                             <Input type="email" name="Email" id="Email" placeholder="Email" 
                             onChange={handleChange}
                             value={formData.Email || ''}
-                            required/>
+                            />
                           </FormGroup>
                         </Col>
                         <Col md={6}>
@@ -149,7 +181,7 @@ function NewRequest() {
                             <Input type="text" name="Address" id="CurrentAddress" placeholder="Current Address" 
                             onChange={handleChange}
                             value={formData.Address || ''}
-                            required/>
+                            />
                           </FormGroup>
                         </Col>
                     </Row>
@@ -161,7 +193,7 @@ function NewRequest() {
                           <Input type="text" name="City" id="City" placeholder="City" 
                           onChange={handleChange}
                           value={formData.City || ''}
-                          required/>
+                          />
                         </FormGroup>
                       </Col>
                       <Col md={4}>
@@ -170,7 +202,7 @@ function NewRequest() {
                           <Input type="text" name="State" id="State" placeholder="State" maxLength="2" 
                           onChange={handleChange}
                           value={formData.State || ''}
-                          required/>
+                          />
                         </FormGroup>
                       </Col>
                       <Col md={2}>
@@ -179,7 +211,7 @@ function NewRequest() {
                           <Input type="text" name="Zip" id="Zip" placeholder="Zip" maxLength="5" 
                           onChange={handleChange}
                           value={formData.Zip || ''}
-                          required/>
+                          />
                         </FormGroup>  
                       </Col>
                     </Row>
@@ -190,7 +222,7 @@ function NewRequest() {
                           <Input type="text" name="New" id="NewAddress" placeholder="New Location" 
                           onChange={handleChange}
                           value={formData.New || ''}
-                          required/>
+                          />
                         </FormGroup>
                       </Col>
                     </Row>
@@ -209,7 +241,7 @@ function NewRequest() {
                     </Col>
                   </FormGroup>
                   <Button color="warning" href='/'>Back</Button>{' '}
-                  <Button onClick={emailSubmit} color="warning" type="submit">Submit</Button>
+                  <Button onClick={() => { if (window.confirm(confirmationTemplate())) emailSubmit() }} color="warning" type="submit">Submit</Button>
                   </Form>
                   
                   </div>

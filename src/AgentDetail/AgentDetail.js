@@ -80,6 +80,16 @@ function AgentDetail(){
                             />
                           </FormGroup>
                         </Col>
+                        <Col md="4">
+                          <FormGroup>
+                            <label>Status</label>
+                            <Input
+                              placeholder="Active"
+                              type="text"
+                              disabled
+                            />
+                          </FormGroup>
+                        </Col>
                       </Row>
                       
                     </Form>
@@ -89,6 +99,7 @@ function AgentDetail(){
                       Leave
                     </Button>
                     {' '}
+                    
                   </CardFooter>
                 </Card>
               </Col>

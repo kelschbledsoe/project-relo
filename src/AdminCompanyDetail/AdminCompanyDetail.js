@@ -9,13 +9,11 @@ import {
     Input,
     Row,
     Col,
-    CardTitle,
-    Table,
     CardFooter,
     Button,
   } from "reactstrap";
 
-function CompanyDetail(){
+function AdminCompanyDetail(){
     return(
         <>
         <div className="content">
@@ -23,8 +21,7 @@ function CompanyDetail(){
             <Col md="12">
               <Card>
                 <CardHeader tag='h2'>
-                  
-                  Mortgage Request Detail for Agent (Under Development)
+                  Company Detail for Admin (Under Development)
                 </CardHeader>
                 <CardBody>
                   <Form>
@@ -70,63 +67,19 @@ function CompanyDetail(){
               </Card>
             </Col>
           </Row>
-
-          <Row>
-          <Col lg="12" md="12">
-            <Card>
-              <CardHeader>
-                <CardTitle tag="h4">Updates</CardTitle>
-              </CardHeader>
-              <CardBody>
-                <Table className="tablesorter" bordered>
-                  <thead className="text-primary">
-                    <tr>
-                      <th>Detail</th>
-                      <th>Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      
-                      <td>Company will accept client if request submitted</td>
-                      <td>2/2/2021</td>
-                    </tr>
-                    <tr>
-                      <td>Company has contacted client</td>
-                      <td>2/1/2021</td>
-                    </tr>
-                    <tr>
-                      <td>Company has received request.</td>
-                      <td>1/30/2021</td>
-                    </tr>
-                    
-                  </tbody>
-                </Table>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
         <Row>
-          <Col lg="12" md="12">
-            <Card>
-              <CardHeader>
-                <CardTitle tag="h4">Updates</CardTitle>
-              </CardHeader>
-              <CardBody>
-                  <CardFooter>
-                    <Button className="btn-fill" color="warning" type="submit">
-                      Add New Message
-                      </Button>
-                    
-
-                  </CardFooter>
-              </CardBody>
-            </Card>
-          </Col>
+            <CardBody>
+                <CardFooter>
+                <Button href='/' className="btn-fill" color="warning" type="submit">
+                    Leave
+                </Button>
+               
+                </CardFooter>
+            </CardBody>
         </Row>
         </div>
       </>
     );
 }
 
-export default CompanyDetail;
+export default AdminCompanyDetail;

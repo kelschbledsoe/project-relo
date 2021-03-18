@@ -12,6 +12,7 @@ import CompanyDetail from "./CompanyDetail/CompanyDetail"
 import Search from "./Search/Search"
 import Login from "./Login/Login"
 import AgentDetail from "./AgentDetail/AgentDetail"
+import AdminCompanyDetail from './AdminCompanyDetail/AdminCompanyDetail'
 
 export default class Routes extends Component {
     render() {
@@ -28,6 +29,7 @@ export default class Routes extends Component {
                     <Route path="/Search" component={Search}/>
                     <Route path="/Login" component={Login}/>
                     <Route path="/AgentDetail" component={AgentDetail}/>
+                    <Route path="/AdminCompanyDetail" component={AdminCompanyDetail}/>
                 </Switch>
             </Router>
         )

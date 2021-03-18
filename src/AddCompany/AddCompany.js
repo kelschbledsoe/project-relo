@@ -35,6 +35,19 @@ const formReducer = (state, event) => {
 }
 
 function AddCompany() {
+  
+  //Setting Confirmation Statement for adding new company
+  function confirmationTemplate(){
+    const company = formData.Company;
+    const email = formData.Email;
+    const method = formData.Method;
+
+    var confirmationMessage = 'Please confirm all the information filled is correct.\nYou are submitting the following \n\n' + 
+                              'Company: ' + company + '\n' + 
+                              'Email Address: ' + email + '\n' +
+                              'Method of Receiving Request: ' + method;
+    return confirmationMessage;
+  }
 
   async function createCompany()
   {
@@ -88,7 +101,7 @@ function AddCompany() {
                   Add New Company
                 </CardHeader>
                 <CardHeader>Please complete all fields to submit your request.</CardHeader>
-                {submitting &&
+                {/* {submitting &&
                   <div>
                   You are submitting the following:
                   <ul>
@@ -97,7 +110,7 @@ function AddCompany() {
                     ))}
                   </ul>
                 </div>
-                }
+                } */}
                 <CardBody>
                   <Form onSubmit={handleSubmit}>
                     <Row>
@@ -142,10 +155,9 @@ function AddCompany() {
                   </FormGroup>
                     <CardFooter>
                       <Button color="warning" href='/'>Back</Button>{' '}
-                      <Button className="btn-fill" color="warning" type="submit" onClick={createCompany}>
+                      <Button className="btn-fill" color="warning" type="submit" onClick={() => { if (window.confirm(confirmationTemplate())) createCompany() }}>
                         Submit
                       </Button>
-                      {/* <button onClick={queryCompany}>Query Company </button> */}
                     </CardFooter>
                   </Form>
                 </CardBody>

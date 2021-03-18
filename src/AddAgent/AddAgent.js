@@ -38,6 +38,23 @@ const formReducer = (state, event) => {
 
 function AddAgent() {
 
+
+    //Setting Confirmation Statement for adding new agent
+    function confirmationTemplate(){
+      const firstName = formData.First;
+      const lastName = formData.Last;
+      const email = formData.Email;
+      const company = formData.Company;
+  
+      var confirmationMessage = 'Please confirm all the information filled is correct.\nYou are submitting the following \n\n' + 
+                                'First Name: ' + firstName + '\n' + 
+                                'Last Name: ' + lastName + '\n' + 
+                                'Email Address: ' + email + '\n' +
+                                'Company: ' + company;
+      return confirmationMessage;
+    }
+
+
   // These async functions are for the API
   async function createAgent()
   {
@@ -90,7 +107,7 @@ function AddAgent() {
                   Add New Agent
                 </CardHeader>
                 <CardHeader>Please complete all fields to submit your request.</CardHeader>
-                {submitting &&
+                {/* {submitting &&
                   <div>
                   You are submitting the following:
                   <ul>
@@ -99,7 +116,7 @@ function AddAgent() {
                     ))}
                   </ul>
                 </div>
-                }
+                } */}
                 <CardBody>
                   <Form onSubmit={handleSubmit}>
                     <Row>
@@ -162,7 +179,7 @@ function AddAgent() {
                     </Row>
                     <CardFooter>
                       <Button color="warning" href='/'>Back</Button>{' '}
-                      <Button className="btn-fill" color="warning" type="submit" onClick={createAgent}>
+                      <Button className="btn-fill" color="warning" type="submit" onClick={() => { if (window.confirm(confirmationTemplate())) createAgent() }}>
                         Submit
                       </Button>
                     </CardFooter>
