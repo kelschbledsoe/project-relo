@@ -72,8 +72,10 @@ function AdminCompanyDetail(){
                 <CardFooter>
                 <Button href='/' className="btn-fill" color="warning" type="submit">
                     Leave
+                </Button> {" "}
+                <Button href='/' className="btn-fill" color="warning" type="submit">
+                    Remove Company
                 </Button>
-               
                 </CardFooter>
             </CardBody>
         </Row>

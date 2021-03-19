@@ -22,7 +22,7 @@ const Navigation = (props) => {
                     <Nav.Link href="/">{""}</Nav.Link>
                     <Nav.Link href="/">{""}</Nav.Link>
 
-                    <Nav.Link href="/">Agent:</Nav.Link>
+                    <Nav.Link href="/Home-Agent">Agent:</Nav.Link>
                     <Nav.Link href="/NewRequest">New Request</Nav.Link>
                     <Nav.Link href="/ClientList">Client List</Nav.Link>
                     <Nav.Link href="/ClientDetail">Client Detail</Nav.Link>

@@ -1,4 +1,3 @@
-import "./Home.css";
 import React, { useState, useEffect } from 'react';
 import { API, graphqlOperation } from 'aws-amplify'
 import { listAgents } from './../graphql/queries'
@@ -61,8 +60,8 @@ export default function Home(){
               <Col lg="12" md="12">
                 <Card>
                   <CardHeader>
-                    <CardTitle tag='h1'>Welcome to Project Relo, Admin</CardTitle>
-                    <CardTitle tag="h4">Recent Agents</CardTitle>
+                    <CardTitle tag='h1'>Welcome to Project Relo, Agent</CardTitle>
+                    <CardTitle tag="h4">Recent Clients</CardTitle>
                   </CardHeader>
                   <CardBody>
                     {isLoaded ? (
@@ -71,7 +70,7 @@ export default function Home(){
                         <tr>
                           <th>ID</th>
                           <th>Name</th>
-                          <th>Company</th>
+                          <th>Status</th>
                           <th>Email</th>
                           <th>Select for detail</th>
                         </tr>
@@ -88,7 +87,7 @@ export default function Home(){
                           <td>{agent.firstName} {agent.lastName}</td>
                           <td>{agent.companyName}</td>
                           <td>{agent.email}</td>
-                          <td><Button href="/AgentDetail" color="warning">Detail</Button></td>
+                          <td><Button href="/ClientDetail" color="warning">Detail</Button></td>
                         </tr>)})}
                       </tbody>
                     </Table>
@@ -101,7 +100,7 @@ export default function Home(){
               <Col lg="12" md="12">
                 <Card>
                   <CardHeader>
-                    <CardTitle tag="h4">Recent Companies</CardTitle>
+                    <CardTitle tag="h4">Recent Requests</CardTitle>
                   </CardHeader>
                   <CardBody>
                     <Table className="tablesorter" bordered>
@@ -110,7 +109,7 @@ export default function Home(){
                           <th>ID</th>
                           <th>Company</th>
                           <th>Company Email</th>
-                          <th>Method</th>
+                          <th>Status</th>
                           <th>Select for detail</th>
                         </tr>
                       </thead>
@@ -126,7 +125,7 @@ export default function Home(){
                           <td>{company.name}</td>
                           <td>{company.email}</td>
                           <td>{company.requestMethod}</td>
-                          <td><Button href="/AdminCompanyDetail" color="warning">Detail</Button></td>
+                          <td><Button href="/CompanyDetail" color="warning">Detail</Button></td>
                         </tr>)})}
                       </tbody>
                     </Table>

@@ -6,13 +6,14 @@ import ClientList from "./ClientList/ClientList";
 import Home from "./Home/Home";
 import AddAgent from "./AddAgent/AddAgent";
 import history from './history';
-import AddCompany from "./AddCompany/AddCompany"
-import ClientDetail from "./ClientDetail/ClientDetail"
-import CompanyDetail from "./CompanyDetail/CompanyDetail"
-import Search from "./Search/Search"
-import Login from "./Login/Login"
-import AgentDetail from "./AgentDetail/AgentDetail"
-import AdminCompanyDetail from './AdminCompanyDetail/AdminCompanyDetail'
+import AddCompany from "./AddCompany/AddCompany";
+import ClientDetail from "./ClientDetail/ClientDetail";
+import CompanyDetail from "./CompanyDetail/CompanyDetail";
+import Search from "./Search/Search";
+import Login from "./Login/Login";
+import AgentDetail from "./AgentDetail/AgentDetail";
+import AdminCompanyDetail from './AdminCompanyDetail/AdminCompanyDetail';
+import AgentHome from './Agent-Home/Agent-Home';
 
 export default class Routes extends Component {
     render() {
@@ -30,6 +31,7 @@ export default class Routes extends Component {
                     <Route path="/Login" component={Login}/>
                     <Route path="/AgentDetail" component={AgentDetail}/>
                     <Route path="/AdminCompanyDetail" component={AdminCompanyDetail}/>
+                    <Route path="/Home-Agent" component={AgentHome}/>
                 </Switch>
             </Router>
         )

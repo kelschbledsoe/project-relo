@@ -32,6 +32,7 @@ function AgentDetail(){
                           <FormGroup>
                             <label>First Name</label>
                             <Input
+                              name="firstName"
                               placeholder="John"
                               type="text"
                               disabled
@@ -42,6 +43,7 @@ function AgentDetail(){
                           <FormGroup>
                             <label>Last Name</label>
                             <Input
+                              name="lastName"
                               placeholder="Smith"
                               type="text"
                               disabled
@@ -52,6 +54,7 @@ function AgentDetail(){
                           <FormGroup>
                             <label>ID</label>
                             <Input
+                              name='id'
                               placeholder="5"
                               type="text"
                               disabled
@@ -64,6 +67,7 @@ function AgentDetail(){
                           <FormGroup>
                             <label>Company</label>
                             <Input
+                              name="company"
                               placeholder="Chase"
                               type="text"
                               disabled
@@ -74,6 +78,7 @@ function AgentDetail(){
                           <FormGroup>
                             <label>Email Address</label>
                             <Input
+                              name='email'
                               placeholder="john.smith@chase.com"
                               type="email"
                               disabled
@@ -84,6 +89,7 @@ function AgentDetail(){
                           <FormGroup>
                             <label>Status</label>
                             <Input
+                              name='status'
                               placeholder="Active"
                               type="text"
                               disabled
@@ -99,7 +105,8 @@ function AgentDetail(){
                       Leave
                     </Button>
                     {' '}
-                    
+                    <Button href='/' className="btn-fill" color="warning" type="submit">Set as Inactive</Button>{' '}
+                    <Button href='/' className="btn-fill" color="warning" type="submit">Set as Active</Button>
                   </CardFooter>
                 </Card>
               </Col>
