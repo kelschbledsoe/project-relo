@@ -10,6 +10,11 @@
       "StackName": "amplify-relo123-staging-234826",
       "StackId": "arn:aws:cloudformation:us-east-2:840027135642:stack/amplify-relo123-staging-234826/f5162790-77c3-11eb-b80e-0a9e4daac7b4",
       "AmplifyAppId": "d2racs7z0nsmwm"
+    },
+    "categories": {
+      "auth": {
+        "relo123adf8c98b": {}
+      }
     }
   }
 }

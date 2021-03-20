@@ -2,6 +2,8 @@ import React from 'react';
 import './Navbar.css';
 import { Navbar, Nav, } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
+import { AmplifySignOut} from '@aws-amplify/ui-react'
+
 
 const Navigation = (props) => {
     console.log(props);
@@ -27,6 +29,7 @@ const Navigation = (props) => {
                     <Nav.Link href="/ClientList">Client List</Nav.Link>
                     <Nav.Link href="/ClientDetail">Client Detail</Nav.Link>
                     <Nav.Link href="/CompanyDetail">Company Detail (Agent)</Nav.Link>
+                    <AmplifySignOut></AmplifySignOut>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
