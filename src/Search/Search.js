@@ -1,13 +1,44 @@
-import React ,{ useState } from 'react';
+import React, { useReducer, useState } from "react";
 import { Table, Button, Navbar, Container, 
   Nav, Form, FormGroup, Input, Card, 
   CardHeader, Row, Col, CardBody } from 'reactstrap';
 
-
+// State object logic
+const formReducer = (state, event) => {
+  if(event.reset) {
+    return {
+      searchBy: '',
+      searchFor: '',
+      searchField: '',
+    }
+  }
+  return {
+    ...state,
+    [event.name]: event.value
+  }
+}
   
 function Search(){
-  const [rSelected, setRSelected] = useState(null);
-  const [cSelected, setCSelected] = useState(null);
+  const [formData, setFormData] = useReducer(formReducer, {});
+  // This event is the Submit button behavior. Has a cool down period to let the API catch up then has a JS alert box.
+  const [submitting, setSubmitting] = useState(false);
+  const handleSubmit = event => {
+    event.preventDefault();
+    setSubmitting(true);
+    setTimeout(() => {
+      setSubmitting(false);
+      setFormData({
+        reset: true
+      })
+    }, 3000)
+  }
+
+  const handleChange = event => {
+    setFormData({
+      name: event.target.name,
+      value: event.target.value,
+    });
+  }
 
     return(
         <div className="content">
@@ -23,19 +54,25 @@ function Search(){
                           <h5 className="title">Search by:</h5>
                         </label>
                         <Col className="ml-auto">
-                          <Button color="warning" onClick={() => setRSelected("Name")} active={rSelected === 'Name'}>Name</Button>
-                        </Col>
-                        <Col className="ml-auto">
-                          <Button color="warning" onClick={() => setRSelected("ID")} active={rSelected === 'ID'}>ID</Button>
+                          <Input type="select" name="searchBy"
+                            onChange={handleChange}
+                            value={formData.searchBy || ''}>
+                              <option></option>
+                              <option>Name</option>
+                              <option>ID</option>
+                          </Input>
                         </Col>
                         <label>
                           <h5 className="title">Search for:</h5>
                         </label>
                         <Col className="ml-auto">
-                          <Button color="warning" onClick={() => setCSelected("Company")} active={cSelected === 'Company'}>Company</Button>
-                        </Col>
-                        <Col className="ml-auto">
-                          <Button color="warning" onClick={() => setCSelected("Agent")} active={cSelected === 'Agent'}>Agent</Button>
+                          <Input type="select" name="searchFor"
+                            onChange={handleChange}
+                            value={formData.searchFor || ''}>
+                              <option></option>
+                              <option>Company</option>
+                              <option>Agent</option>
+                          </Input>
                         </Col>
                         <Col>
                           <Form inline className="ml-auto" size="lg">
@@ -45,7 +82,7 @@ function Search(){
                           </Form>
                         </Col>
                         <Col>
-                          <Button color="warning">Submit</Button>
+                          <Button color="warning" type="submit">Submit</Button>
                         </Col>
                       </Nav>
                     </Container>
