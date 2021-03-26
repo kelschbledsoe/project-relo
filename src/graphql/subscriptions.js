@@ -8,7 +8,6 @@ export const onCreateUpdate = /* GraphQL */ `
       detai
       date
       updateId
-      mortgagerequestID
       _version
       _deleted
       _lastChangedAt
@@ -24,7 +23,6 @@ export const onUpdateUpdate = /* GraphQL */ `
       detai
       date
       updateId
-      mortgagerequestID
       _version
       _deleted
       _lastChangedAt
@@ -40,7 +38,6 @@ export const onDeleteUpdate = /* GraphQL */ `
       detai
       date
       updateId
-      mortgagerequestID
       _version
       _deleted
       _lastChangedAt
@@ -65,16 +62,11 @@ export const onCreateClient = /* GraphQL */ `
       curZip
       newLocation
       status
-      agentID
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
-      MortgageRequests {
-        nextToken
-        startedAt
-      }
     }
   }
 `;
@@ -94,16 +86,11 @@ export const onUpdateClient = /* GraphQL */ `
       curZip
       newLocation
       status
-      agentID
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
-      MortgageRequests {
-        nextToken
-        startedAt
-      }
     }
   }
 `;
@@ -123,16 +110,11 @@ export const onDeleteClient = /* GraphQL */ `
       curZip
       newLocation
       status
-      agentID
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
-      MortgageRequests {
-        nextToken
-        startedAt
-      }
     }
   }
 `;
@@ -196,10 +178,6 @@ export const onCreateAgent = /* GraphQL */ `
       _lastChangedAt
       createdAt
       updatedAt
-      Clients {
-        nextToken
-        startedAt
-      }
     }
   }
 `;
@@ -218,10 +196,6 @@ export const onUpdateAgent = /* GraphQL */ `
       _lastChangedAt
       createdAt
       updatedAt
-      Clients {
-        nextToken
-        startedAt
-      }
     }
   }
 `;
@@ -240,10 +214,6 @@ export const onDeleteAgent = /* GraphQL */ `
       _lastChangedAt
       createdAt
       updatedAt
-      Clients {
-        nextToken
-        startedAt
-      }
     }
   }
 `;
@@ -304,16 +274,12 @@ export const onCreateMortgageRequest = /* GraphQL */ `
       mortgageId
       clientId
       agentId
-      clientID
+      companyId
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
-      Updates {
-        nextToken
-        startedAt
-      }
     }
   }
 `;
@@ -326,16 +292,12 @@ export const onUpdateMortgageRequest = /* GraphQL */ `
       mortgageId
       clientId
       agentId
-      clientID
+      companyId
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
-      Updates {
-        nextToken
-        startedAt
-      }
     }
   }
 `;
@@ -348,16 +310,12 @@ export const onDeleteMortgageRequest = /* GraphQL */ `
       mortgageId
       clientId
       agentId
-      clientID
+      companyId
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
-      Updates {
-        nextToken
-        startedAt
-      }
     }
   }
 `;

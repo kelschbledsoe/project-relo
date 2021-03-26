@@ -8,7 +8,6 @@ export const getUpdate = /* GraphQL */ `
       detai
       date
       updateId
-      mortgagerequestID
       _version
       _deleted
       _lastChangedAt
@@ -29,7 +28,6 @@ export const listUpdates = /* GraphQL */ `
         detai
         date
         updateId
-        mortgagerequestID
         _version
         _deleted
         _lastChangedAt
@@ -59,7 +57,6 @@ export const syncUpdates = /* GraphQL */ `
         detai
         date
         updateId
-        mortgagerequestID
         _version
         _deleted
         _lastChangedAt
@@ -87,16 +84,11 @@ export const getClient = /* GraphQL */ `
       curZip
       newLocation
       status
-      agentID
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
-      MortgageRequests {
-        nextToken
-        startedAt
-      }
     }
   }
 `;
@@ -121,7 +113,6 @@ export const listClients = /* GraphQL */ `
         curZip
         newLocation
         status
-        agentID
         _version
         _deleted
         _lastChangedAt
@@ -160,7 +151,6 @@ export const syncClients = /* GraphQL */ `
         curZip
         newLocation
         status
-        agentID
         _version
         _deleted
         _lastChangedAt
@@ -258,10 +248,6 @@ export const getAgent = /* GraphQL */ `
       _lastChangedAt
       createdAt
       updatedAt
-      Clients {
-        nextToken
-        startedAt
-      }
     }
   }
 `;
@@ -402,16 +388,12 @@ export const getMortgageRequest = /* GraphQL */ `
       mortgageId
       clientId
       agentId
-      clientID
+      companyId
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
-      Updates {
-        nextToken
-        startedAt
-      }
     }
   }
 `;
@@ -433,7 +415,7 @@ export const listMortgageRequests = /* GraphQL */ `
         mortgageId
         clientId
         agentId
-        clientID
+        companyId
         _version
         _deleted
         _lastChangedAt
@@ -465,7 +447,7 @@ export const syncMortgageRequests = /* GraphQL */ `
         mortgageId
         clientId
         agentId
-        clientID
+        companyId
         _version
         _deleted
         _lastChangedAt

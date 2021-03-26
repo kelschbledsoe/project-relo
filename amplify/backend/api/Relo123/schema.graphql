@@ -1,12 +1,11 @@
-type Update @model @auth(rules: [{allow: public}]) @key(name: "byMortgageRequest", fields: ["mortgagerequestID"]) {
+type Update @model @auth(rules: [{allow: public}]) {
   id: ID!
   detai: String
   date: String
   updateId: Int
-  mortgagerequestID: ID
 }
 
-type Client @model @auth(rules: [{allow: public}]) @key(name: "byAgent", fields: ["agentID"]) {
+type Client @model @auth(rules: [{allow: public}]) {
   id: ID!
   firstName: String
   lastName: String
@@ -20,8 +19,6 @@ type Client @model @auth(rules: [{allow: public}]) @key(name: "byAgent", fields:
   curZip: Int
   newLocation: String
   status: Int
-  MortgageRequests: [MortgageRequest] @connection(keyName: "byClient", fields: ["id"])
-  agentID: ID
 }
 
 type RelocationAgent @model @auth(rules: [{allow: public}]) {
@@ -37,7 +34,6 @@ type Agent @model @auth(rules: [{allow: public}]) {
   lastName: String
   companyName: String
   email: String
-  Clients: [Client] @connection(keyName: "byAgent", fields: ["id"])
   status: Int
   agentId: Int
 }
@@ -50,14 +46,13 @@ type Company @model @auth(rules: [{allow: public}]) {
   companyId: Int
 }
 
-type MortgageRequest @model @auth(rules: [{allow: public}]) @key(name: "byClient", fields: ["clientID"]) {
+type MortgageRequest @model @auth(rules: [{allow: public}]) {
   id: ID!
   status: Int
-  relocationId: ID
-  mortgageId: ID
-  clientId: ID
-  agentId: ID
-  clientID: ID
-  Updates: [Update] @connection(keyName: "byMortgageRequest", fields: ["id"])
+  relocationId: Int
+  mortgageId: Int
+  clientId: Int
+  agentId: Int
+  companyId: Int
 }
  

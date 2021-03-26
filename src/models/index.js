@@ -4,13 +4,13 @@ import { schema } from './schema';
 
 
 
-const { Update, Client, MortgageRequest, RelocationAgent, Agent, Company } = initSchema(schema);
+const { Update, Client, RelocationAgent, Agent, Company, MortgageRequest } = initSchema(schema);
 
 export {
   Update,
   Client,
-  MortgageRequest,
   RelocationAgent,
   Agent,
-  Company
+  Company,
+  MortgageRequest
 };
