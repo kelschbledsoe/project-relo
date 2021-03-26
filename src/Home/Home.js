@@ -77,14 +77,14 @@ export default function Home(){
                         </tr>
                       </thead>
                       <tbody>
-                        {//Need to make key that auto inc for the agent ID. Also need status part
-                        agents.map(function(agent,index)
                         {
-                          if(agent.lastName === "Amet" || agent.lastName === "deployed" || agent.lastName === "test" || agent.firstName === "Jewelyan" || agent.firstName === "" || agent.companyName === "qcki"){
+                        agents.map(function(agent)
+                        {
+                          if(!agent.agentId || agent.companyName === "test"){
                             return;
                           }
                           return(<tr>
-                          <td>{index}</td>
+                          <td>{agent.agentId}</td>
                           <td>{agent.firstName} {agent.lastName}</td>
                           <td>{agent.companyName}</td>
                           <td>{agent.email}</td>
@@ -115,14 +115,14 @@ export default function Home(){
                         </tr>
                       </thead>
                       <tbody>
-                        {//Need to make key that auto inc for the agent ID. Also need status part
+                        {
                         companys.map(function(company,index)
                         {
-                          if(company.name === "TAPA" || company.name === "Co." || company.name === "" || company.name === "bb" || company.email === "mortgage.requests@quickenloans.com"){
+                          if(!company.companyId){
                             return;
                           }
                           return(<tr>
-                          <td>{index+4}</td>
+                          <td>{company.companyId}</td>
                           <td>{company.name}</td>
                           <td>{company.email}</td>
                           <td>{company.requestMethod}</td>

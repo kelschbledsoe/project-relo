@@ -1,5 +1,5 @@
 import React, { useReducer, useState } from "react";
-import { API, graphqlOperation } from 'aws-amplify'
+import { API, graphqlOperation } from 'aws-amplify';
 import { Company } from './../models';
 import { listCompanys } from './../graphql/queries';
 import * as mutations from './../graphql/mutations';
