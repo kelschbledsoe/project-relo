@@ -232,6 +232,7 @@ function NewRequest() {
                       <Input type="select" name="Company" id="SelectCompany"
                       onChange={handleChange}
                       value={formData.Company || ''}>
+                        <option></option>
                         <option>Chase</option>
                         <option>PNC Bank</option>
                         <option>Quicken Loans</option>

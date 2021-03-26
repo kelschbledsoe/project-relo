@@ -84,6 +84,35 @@ function Search(){
       value: event.target.value,
     });
   }
+
+  //Pop up detail for selected agent
+  function showAgent(id){
+    var agentName = " "
+    var agentEmail = " "
+    var agentStatus = " "
+    agents.map(function(agent){
+      if(!agent.agentId || agent.companyName === "test"){
+        return;
+      }
+      if (Number(id) === Number(agent.agentId)){
+      agentName = agent.firstName + " " + agent.lastName;
+      agentEmail = agent.email
+      if (agent.status === 1){
+        agentStatus = "Active"
+      }
+      else{
+        agentStatus = "Inactive"
+      }}
+    })
+   
+    var confirmationMessage = 'Agent Information \n\n' + 
+                              'ID: ' + id + '\n' +
+                              'Name: ' + agentName + '\n' +
+                              'Email: ' + agentEmail + '\n' +
+                              'Status: ' + agentStatus
+                              
+    return confirmationMessage;
+  }
     return(
       <>
       
@@ -158,7 +187,7 @@ function Search(){
                 <th>Name</th>
                 <th>Company</th>
                 <th>Email</th>
-                <th>Select for detail</th>
+                <th>Options</th>
               </tr>
             </thead>
             <tbody>
@@ -168,13 +197,30 @@ function Search(){
                 if(!agent.agentId || agent.companyName === "test"){
                   return;
                 }
-                return(<tr>
-                <td>{agent.agentId}</td>
-                <td>{agent.firstName} {agent.lastName}</td>
-                <td>{agent.companyName}</td>
-                <td>{agent.email}</td>
-                <td><Button href="/AgentDetail" color="warning">Detail</Button></td>
-              </tr>)})}
+                if (Number(agent.status === 1)){
+                  return(<tr>
+                  <td>{agent.agentId}</td>
+                  <td>{agent.firstName} {agent.lastName}</td>
+                  <td>{agent.companyName}</td>
+                  <td>{agent.email}</td>
+                  <td><Button onClick={() => { if (window.confirm(showAgent(agent.agentId))) return }} color="warning">Detail</Button>
+                            {/* {" "}<Button color="warning">Set as Inactive</Button></td> */}
+                            {" "}<Button color="warning">Set as Inactive</Button></td>
+
+                  </tr>)}
+                  else{
+                    return(<tr>
+                      <td>{agent.agentId}</td>
+                      <td>{agent.firstName} {agent.lastName}</td>
+                      <td>{agent.companyName}</td>
+                      <td>{agent.email}</td>
+                      <td><Button onClick={() => { if (window.confirm(showAgent(agent.agentId))) return }} color="warning">Detail</Button>
+                                {/* {" "}<Button color="warning">Set as Inactive</Button></td> */}
+                                {" "}<Button color="warning">Set as Active</Button></td>
+    
+                      </tr>)}
+                  })})
+              
             </tbody>
           </Table>
         </CardBody>
@@ -187,7 +233,7 @@ function Search(){
                 <th>Name</th>
                 <th>Email</th>
                 <th>Method</th>
-                <th>Select for detail</th>
+                <th>Options</th>
               </tr>
             </thead>
             <tbody>
