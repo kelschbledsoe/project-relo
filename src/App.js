@@ -1,4 +1,4 @@
-import React from 'react';
+import React  from 'react';
 import './App.css';
 import Navigation from './components/Navbar';
 import Routes from './Routes';
@@ -13,6 +13,8 @@ Amplify.configure(awsconfig);
 
 
 function App() {
+
+
   return (
     <div className="App">
       <Navigation />

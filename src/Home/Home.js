@@ -52,6 +52,25 @@ export default function Home(){
     queryCompany()
   }, [setIsLoaded])
   
+
+  //Pop up detail for selected agent
+  function showAgent(id){
+    var agentId = id;
+    var agentName = " "
+    agents.map(function(agent){
+      if(!agent.agentId || agent.companyName === "test"){
+        return;
+      }
+      
+      agentName = agents[id].firstName + agents[id].lastName;
+    })
+   
+    var confirmationMessage = 'Agent Information \n\n' + 
+                              'ID: ' + agentId + '\n' +
+                              'Name: ' + agentName + '\n' 
+                              
+    return confirmationMessage;
+  }
     return (
       <>
       {isLoaded && (
@@ -73,7 +92,7 @@ export default function Home(){
                           <th>Name</th>
                           <th>Company</th>
                           <th>Email</th>
-                          <th>Select for detail</th>
+                          <th>Options</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -88,7 +107,9 @@ export default function Home(){
                           <td>{agent.firstName} {agent.lastName}</td>
                           <td>{agent.companyName}</td>
                           <td>{agent.email}</td>
-                          <td><Button href="/AgentDetail" color="warning">Detail</Button></td>
+                          <td><Button  color="warning">Detail</Button>
+                          {" "}<Button color="warning">Set as Inactive</Button></td>
+                          {/* {" "}<Button onClick={() => { if (window.confirm(showAgent(agent.agentId))) return }} color="warning">Set as Inactive</Button></td> */}
                         </tr>)})}
                       </tbody>
                     </Table>
@@ -111,7 +132,7 @@ export default function Home(){
                           <th>Company</th>
                           <th>Company Email</th>
                           <th>Method</th>
-                          <th>Select for detail</th>
+                          <th>Options</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -126,7 +147,8 @@ export default function Home(){
                           <td>{company.name}</td>
                           <td>{company.email}</td>
                           <td>{company.requestMethod}</td>
-                          <td><Button href="/AdminCompanyDetail" color="warning">Detail</Button></td>
+                          <td><Button href="/AdminCompanyDetail" color="warning">Detail</Button>
+                          {" "}<Button href="/CompanyDetail" color="warning">Remove Company</Button></td>
                         </tr>)})}
                       </tbody>
                     </Table>

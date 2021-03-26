@@ -72,7 +72,7 @@ export default function Home(){
                           <th>Name</th>
                           <th>Status</th>
                           <th>Email</th>
-                          <th>Select for detail</th>
+                          <th>Options</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -87,7 +87,8 @@ export default function Home(){
                           <td>{agent.firstName} {agent.lastName}</td>
                           <td>{agent.companyName}</td>
                           <td>{agent.email}</td>
-                          <td><Button href="/ClientDetail" color="warning">Detail</Button></td>
+                          <td><Button href="/ClientDetail" color="warning">Detail</Button>
+                          {" "}<Button href="/ClientDetail" color="warning">Mark as Complete</Button></td>
                         </tr>)})}
                       </tbody>
                     </Table>
@@ -110,7 +111,7 @@ export default function Home(){
                           <th>Company</th>
                           <th>Company Email</th>
                           <th>Status</th>
-                          <th>Select for detail</th>
+                          <th>Options</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -125,7 +126,8 @@ export default function Home(){
                           <td>{company.name}</td>
                           <td>{company.email}</td>
                           <td>{company.requestMethod}</td>
-                          <td><Button href="/CompanyDetail" color="warning">Detail</Button></td>
+                          <td><Button href="/CompanyDetail" color="warning">Detail</Button>
+                          {" "}<Button color="warning">Mark as Complete</Button></td>
                         </tr>)})}
                       </tbody>
                     </Table>
