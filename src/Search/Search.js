@@ -108,7 +108,6 @@ function Search(){
         agentStatus = "Inactive"
       }}
     })
-   
     var confirmationMessage = 'Agent Information \n\n' + 
                               'ID: ' + id + '\n' +
                               'Name: ' + agentName + '\n' +
@@ -119,7 +118,6 @@ function Search(){
   }
     return(
       <>
-      
         <div className="content">
           <Row>
             <Col md="12">
@@ -191,6 +189,7 @@ function Search(){
                 <th>Name</th>
                 <th>Company</th>
                 <th>Email</th>
+                <th>Status</th>
                 <th>Options</th>
               </tr>
             </thead>
@@ -198,6 +197,8 @@ function Search(){
             {
               agents.map(function(agent)
               {
+                let status;
+                agent.status === 1 ? status="Active":status="Completed";
                 if(!agent.agentId || agent.companyName === "test"){
                   return;
                 }
@@ -207,10 +208,10 @@ function Search(){
                   <td>{agent.firstName} {agent.lastName}</td>
                   <td>{agent.companyName}</td>
                   <td>{agent.email}</td>
+                  <td>{status}</td>
                   <td><Button onClick={() => { if (window.confirm(showAgent(agent.agentId))) return }} color="warning">Detail</Button>
                             {/* {" "}<Button color="warning">Set as Inactive</Button></td> */}
                             {" "}<Button color="warning">Set as Inactive</Button></td>
-
                   </tr>)}
                   else{
                     return(<tr>
@@ -221,10 +222,8 @@ function Search(){
                       <td><Button onClick={() => { if (window.confirm(showAgent(agent.agentId))) return }} color="warning">Detail</Button>
                                 {/* {" "}<Button color="warning">Set as Inactive</Button></td> */}
                                 {" "}<Button color="warning">Set as Active</Button></td>
-    
                       </tr>)}
-                  })})
-              
+                  })}
             </tbody>
           </Table>
         </CardBody>
@@ -257,7 +256,6 @@ function Search(){
           </Table>
         </CardBody>
       </div>
-      
         </>
     );
 }
