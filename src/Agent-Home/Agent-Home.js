@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { API, graphqlOperation } from 'aws-amplify'
-import { listAgents } from './../graphql/queries'
-import { listCompanys } from './../graphql/queries'
-
+import { listClients, listMortgageRequests} from './../graphql/queries'
 
 import {
   Button,
@@ -16,39 +14,36 @@ import {
   Spinner,
 } from "reactstrap";
 
-
-
 export default function Home(){
-  const [agents, setAgents] = useState([])
-  const [companys, setCompanys] = useState([])
+  const [mortgageRequests, setmortgageRequests] = useState([])
+  const [clients, setClients] = useState([])
   const [isLoaded, setIsLoaded] = useState(false)
-  let listofagents;
-  let listofcompanys;
+  let listofclients;
+  let listofmortgagerequests;
   // render page
   useEffect(() => {
-    async function queryAgent(){
-      /* make page take longer to load await new Promise(x=>setTimeout(x,10000)) */
-      const models = await API.graphql(graphqlOperation(listAgents))
-      listofagents = models.data.listAgents.items
-      if(listofagents){
-        setAgents(listofagents);
+    async function queryClient(){
+      const models = await API.graphql(graphqlOperation(listClients))
+      listofclients = models.data.listClients.items
+      if(listofclients){
+        setClients(listofclients);
         setIsLoaded(true);
       }
     }
-    queryAgent()
+    queryClient()
   }, [setIsLoaded])
 
   useEffect(() => {
-    async function queryCompany(){
+    async function querymortgageRequests(){
       /* make page take longer to load await new Promise(x=>setTimeout(x,10000)) */
-      const models = await API.graphql(graphqlOperation(listCompanys))
-      listofcompanys = models.data.listCompanys.items
-      if(listofcompanys){
-        setCompanys(listofcompanys);
+      const models = await API.graphql(graphqlOperation(listMortgageRequests))
+      listofmortgagerequests = models.data.listMortgageRequests.items
+      if(listofmortgagerequests){
+        setmortgageRequests(listofmortgagerequests);
         setIsLoaded(true);
       }
     }
-    queryCompany()
+    querymortgageRequests()
   }, [setIsLoaded])
   
     return (
@@ -70,23 +65,26 @@ export default function Home(){
                         <tr>
                           <th>ID</th>
                           <th>Name</th>
-                          <th>Status</th>
                           <th>Email</th>
+                          <th>Status</th>
                           <th>Options</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {//Need to make key that auto inc for the agent ID. Also need status part
-                        agents.map(function(agent,index)
                         {
-                          if(agent.lastName === "Amet" || agent.lastName === "deployed" || agent.lastName === "test" || agent.firstName === "Jewelyan" || agent.firstName === "" || agent.companyName === "qcki"){
+                        clients.map(function(client)
+                        {
+                          let status;
+                          client.status === 1 ? status="Active":status="Completed";
+                          /* Commenting out so no issues with demo
+                          if(!client.clientId){
                             return;
-                          }
+                          }*/
                           return(<tr>
-                          <td>{index}</td>
-                          <td>{agent.firstName} {agent.lastName}</td>
-                          <td>{agent.companyName}</td>
-                          <td>{agent.email}</td>
+                          <td>{client.clientId}</td>
+                          <td>{client.firstName} {client.lastName}</td>
+                          <td>{client.email}</td>
+                          <td>{status}</td>
                           <td><Button href="/ClientDetail" color="warning">Detail</Button>
                           {" "}<Button href="/ClientDetail" color="warning">Mark as Complete</Button></td>
                         </tr>)})}
@@ -101,31 +99,34 @@ export default function Home(){
               <Col lg="12" md="12">
                 <Card>
                   <CardHeader>
-                    <CardTitle tag="h4">Recent Requests</CardTitle>
+                    <CardTitle tag="h4">Recent Mortgage Requests</CardTitle>
                   </CardHeader>
                   <CardBody>
                     <Table className="tablesorter" bordered>
                       <thead className="text-primary">
                         <tr>
                           <th>ID</th>
-                          <th>Company</th>
-                          <th>Company Email</th>
+                          {/* Doing company ID instead of company name here b/c that's what I have stored. Can change if needed. */}
+                          <th>Company ID</th> 
+                          <th>Client ID</th>
                           <th>Status</th>
                           <th>Options</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {//Need to make key that auto inc for the agent ID. Also need status part
-                        companys.map(function(company,index)
                         {
-                          if(company.name === "TAPA" || company.name === "Co." || company.name === "" || company.name === "bb" || company.email === "mortgage.requests@quickenloans.com"){
+                        mortgageRequests.map(function(request)
+                        {
+                          let status;
+                          request.status === 1 ? status="Active":status="Completed";
+                          /* if(!request.mortgageId){
                             return;
-                          }
+                          } */
                           return(<tr>
-                          <td>{index+4}</td>
-                          <td>{company.name}</td>
-                          <td>{company.email}</td>
-                          <td>{company.requestMethod}</td>
+                          <td>{request.mortgageId}</td>
+                          <td>{request.companyId}</td>
+                          <td>{request.clientId}</td>
+                          <td>{status}</td>
                           <td><Button href="/CompanyDetail" color="warning">Detail</Button>
                           {" "}<Button color="warning">Mark as Complete</Button></td>
                         </tr>)})}
