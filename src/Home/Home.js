@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { API, graphqlOperation } from 'aws-amplify'
 import { listAgents } from './../graphql/queries'
 import { listCompanys } from './../graphql/queries'
+import * as mutations from './../graphql/mutations';
+
 
 
 import {
@@ -52,7 +54,49 @@ export default function Home(){
     queryCompany()
   }, [setIsLoaded])
   
+async function searchAgent()
+{
+  const search = await API.graphql(graphqlOperation(`
+  query searchAgent {
+    listAgents (filter:{ firstName:{ contains:"Jihwan"}})
+    {
+      items{
+        id
+        firstName
+        lastName
+        email
+        companyName
+        agentId
+        status
+        _version
+      }
 
+    }
+
+  }
+  
+  
+  `))
+  console.log(search);
+}
+
+async function changeJihwanStatus()
+{
+  const todoDetails = {
+    id: '9e6afd4e-9566-4e22-8e0b-8950c7b1b430',
+    firstName: 'Jihwan',
+    lastName: 'Jihwan',
+    companyName: 'Quicken Loans',
+    email: 'jihwan@jihwan.com',
+    agentId: 47,
+    status: 1,
+    _version:35
+
+  };
+  
+  const updatedTodo = await API.graphql({ query: mutations.updateAgent, variables: {input: todoDetails}});
+  console.log(updatedTodo);
+}
   //Pop up detail for selected agent
   function showAgent(id){
     var agentName = " "
@@ -246,6 +290,8 @@ export default function Home(){
                 </Card>
               </Col>
             </Row>
+            <button onClick={searchAgent}>SearchAgent</button>
+            <button onClick={changeJihwanStatus}>changeJihwanStatus</button>
           </div>
         </>
         )}
