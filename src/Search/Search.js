@@ -31,8 +31,12 @@ function Search(){
   const [agents, setAgents] = useState([])
   let listofagents;
   let listofcompanys;
+  /*
+    I know this is the complete wrong way to implement a search page. The back-end team would not properly
+    create a query for me to actually implement the search page. This was the only way I could get something
+    functional in time.
+  */
   async function queryCompany(){
-      /* make page take longer to load await new Promise(x=>setTimeout(x,10000)) */
       const models = await API.graphql(graphqlOperation(listCompanys))
       listofcompanys = models.data.listCompanys.items
       if(listofcompanys){

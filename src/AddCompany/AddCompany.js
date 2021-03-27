@@ -56,10 +56,10 @@ function AddCompany() {
         name: formData.Company,
         email: formData.Email,
         requestMethod: formData.Method,
+        // Need to add a field here to create an ID b/c of how the back-end set up the mutation
       };
 
       const newCompany = await API.graphql({ query: mutations.createCompany, variables:{input: createCompany}});
-      console.log(newCompany);
   }
 
   async function queryCompany()
