@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useReducer } from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listAgents, listCompanys } from './../graphql/queries';
 import { Table, Button, Navbar, Container, 
@@ -123,7 +123,7 @@ function Search(){
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <h5 className="title">Admin Search Section</h5>
+                  <h5 className="title">Admin Search</h5>
                   <Navbar expand="lg">
                     <Container>
                       <Nav className="justify-content-left">
