@@ -3,9 +3,9 @@ import {Card, CardHeader,
   CardBody, Row, Col, Button, 
   Form, FormGroup, Label, Input} from 'reactstrap';
 import emailjs from 'emailjs-com';
-import { API } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 import * as mutations from './../graphql/mutations';
-
+import { listCompanys } from './../graphql/queries'
 
 
   // State object logic
@@ -33,9 +33,31 @@ const formReducer = (state, event) => {
 
 
 function NewRequest() {
+  // Query list of companies to fill that part of new request
+  const [companys, setCompanys] = useState([])
+  let listofcompanys;
+  async function queryCompany(){
+    /* make page take longer to load await new Promise(x=>setTimeout(x,10000)) */
+    const models = await API.graphql(graphqlOperation(listCompanys))
+    listofcompanys = models.data.listCompanys.items
+    if(listofcompanys){
+      setCompanys(listofcompanys);
+    }
+  }
+  queryCompany()
   // Create both the client and the mortgage request. Not sure if this should be split into two functions or not
   async function createRequest()
   {
+    // First grab the company ID. I know this is the wrong way, but again, I don't have proper queries to work with
+    let companyId;
+    companys.map(function(company){
+      if(!company.companyId){
+        return;
+      }
+      if(String(formData.Company) === String(company.name)){
+      companyId = company.companyId;
+      }
+    })
       const createClient = 
       {
         firstName: formData.First,
@@ -59,6 +81,7 @@ function NewRequest() {
         // Again, I have no way of actually implementing website functionality because back-end didn't do this right
         // A mortgage request needs multiple ID fields and I have no way of getting any of them
         status: 1,
+        companyId: companyId,
         agentId: formData.AgentId,
       }
       const newMortgageRequest = await API.graphql({ query: mutations.createMortgageRequest, variables:{input: createMortgageRequest}});
@@ -253,7 +276,7 @@ function NewRequest() {
                     <Row>
                       <Col md={6}>
                         <FormGroup> 
-                          <Label for="NewAddress">New Location</Label>
+                          <Label for="NewAddress">New Location (City, State)</Label>
                           <Input type="text" name="New" id="NewAddress" placeholder="New Location" 
                           onChange={handleChange}
                           value={formData.New || ''}
@@ -277,18 +300,19 @@ function NewRequest() {
                       onChange={handleChange}
                       value={formData.Company || ''}>
                         <option></option>
-                        <option>Chase</option>
-                        <option>PNC Bank</option>
-                        <option>Quicken Loans</option>
-                        <option>Rocket Mortgage</option>
-                        <option>USAA</option>
+                        {
+                        companys.map(function(company)
+                        {
+                          if(!company.companyId){
+                            return;
+                          }
+                          return(<option>{company.name}</option>)})}
                       </Input>
                     </Col>
                   </FormGroup>
                   <Button color="warning" href='/'>Back</Button>{' '}
                   <Button onClick={() => { if (window.confirm(confirmationTemplate())) emailSubmit(); createRequest()}} color="warning" type="submit">Submit</Button>
                   </Form>
-                  
                   </div>
                 </CardBody>
               </Card>

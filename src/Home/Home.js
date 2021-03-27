@@ -26,6 +26,7 @@ export default function Home(){
   const [companys, setCompanys] = useState([])
   const [isLoaded, setIsLoaded] = useState(false)
   let listofagents;
+  // Sorry this is spelt wrong. That's the back-end team's fault and I don't want to change the convention
   let listofcompanys;
   // render page
   useEffect(() => {
