@@ -14,6 +14,8 @@ import AgentDetail from "./AgentDetail/AgentDetail";
 import AdminCompanyDetail from './AdminCompanyDetail/AdminCompanyDetail';
 import AgentHome from './Agent-Home/Agent-Home';
 import AdditionalRequest from './AdditionalRequest/AdditionalRequest'
+import EditAgent from './EditAgent/EditAgent'
+import EditCompany from './EditCompany/EditCompany'
 
 export default class Routes extends Component {
     render() {
@@ -32,7 +34,8 @@ export default class Routes extends Component {
                     <Route path="/AdminCompanyDetail" component={AdminCompanyDetail}/>
                     <Route path="/Home-Agent" component={AgentHome}/>
                     <Route path="/AdditionalRequest" component={AdditionalRequest}/>
-
+                    <Route path="/EditAgent" component={EditAgent} />
+                    <Route path='/EditCompany' component={EditCompany}/>
                 </Switch>
             </Router>
         )

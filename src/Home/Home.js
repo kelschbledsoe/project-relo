@@ -173,10 +173,20 @@ async function searchAgent()
                               'Name: ' + companyName + '\n' +
                               'Email: ' + companyEmail + '\n' + 
                               'Request Method: ' + companyMethod + '\n'
-                              
-    return confirmationMessage;  
+    
+    return confirmationMessage;            
   }
 
+  function AgentEdit(id) {
+    var url = "EditAgent?id=" + encodeURIComponent(id);
+    window.location.href = url;
+  }
+
+  function CompanyEdit(id){
+    var url = "EditCompany?id=" + encodeURIComponent(id);
+    window.location.href = url;
+  }
+  
   // Function to update the agent information. Pass in all the agent values.
   async function updateAgent(aid, afn, aln, acn, ae, aaid, as, av){
     // Make this all the details of the existing agent and change any you want changed
@@ -209,6 +219,8 @@ async function searchAgent()
     };
     const updatedTodo = await API.graphql({ query: mutations.updateCompany, variables: {input: companyDetails}});
   }
+
+
     return (
       <>
       {isLoaded && (
@@ -249,7 +261,8 @@ async function searchAgent()
                           {/* {" "}<Button color="warning">Set as Inactive</Button></td> */}
                           {" "}<Button onClick={() => { if (window.confirm(updateAgentStatusConfirmation(agent.agentId)))
                             updateAgent(agent.id, agent.firstName, agent.lastName, agent.companyName, agent.email, agent.agentId, agent.status, agent._version) }} 
-                            color="warning">Set as Inactive</Button></td>
+                            color="warning">Set as Inactive</Button>
+                            {" "}<Button onClick={() => { if (window.confirm("Are you sure you would like to edit this agent's information?")) AgentEdit(agent.agentId) }} color="warning">Edit</Button></td>
                         </tr>)})}
                       </tbody>
                     </Table>
@@ -290,7 +303,8 @@ async function searchAgent()
                           <td><Button onClick={() => { if (window.confirm(showCompanyInfo(company.companyId))) return }} color="warning">Detail</Button>
                           {" "}<Button onClick={() => { if (window.confirm(removeCompanyConfirmation(company.companyId))) 
                             deleteCompany(company.id, company.name, company.email, company.requestMethod, company.companyId, company.status, company._version)
-                          }} color="warning">Remove Company</Button></td>
+                          }} color="warning">Remove Company</Button>
+                          {" "}<Button onClick={() => { if (window.confirm("Are you sure you would like to edit this company's information?")) CompanyEdit(company.companyId) }} color="warning">Edit</Button></td>
                         </tr>)})}
                       </tbody>
                     </Table>

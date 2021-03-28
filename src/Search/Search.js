@@ -194,6 +194,16 @@ function Search(){
     return confirmationMessage;  
   }
 
+  function AgentEdit(id) {
+    var url = "EditAgent?id=" + encodeURIComponent(id);
+    window.location.href = url;
+  }
+
+  function CompanyEdit(id){
+    var url = "EditCompany?id=" + encodeURIComponent(id);
+    window.location.href = url;
+  }
+
   async function updateAgent(aid, afn, aln, acn, ae, aaid, as, av){
     // Hey look I needed the logic lol
     let newStatus = as === 1 ? 0:1;
@@ -320,7 +330,8 @@ function Search(){
                             {/* {" "}<Button color="warning">Set as Inactive</Button></td> */}
                             {" "}<Button onClick={() => { if (window.confirm(updateAgentStatusConfirmation(agent.agentId))) 
                             updateAgent(agent.id, agent.firstName, agent.lastName, agent.companyName, agent.email, agent.agentId, agent.status, agent._version)
-                            }} color="warning">Set as Inactive</Button></td>
+                            }} color="warning">Set as Inactive</Button>
+                            {" "}<Button onClick={() => { if (window.confirm("Are you sure you would like to edit this agent's information?")) AgentEdit(agent.agentId) }} color="warning">Edit</Button></td>
                   </tr>)}
                   else{
                     return(<tr>
@@ -333,7 +344,8 @@ function Search(){
                                 {/* {" "}<Button color="warning">Set as Inactive</Button></td> */}
                                 {" "}<Button onClick={() => { if (window.confirm(updateAgentStatusConfirmation(agent.agentId))) 
                                 updateAgent(agent.id, agent.firstName, agent.lastName, agent.companyName, agent.email, agent.agentId, agent.status, agent._version)
-                                }} color="warning">Set as Active</Button></td>
+                                }} color="warning">Set as Active</Button>
+                                {" "}<Button onClick={() => { if (window.confirm("Are you sure you would like to edit this agent's information?")) AgentEdit(agent.agentId) }} color="warning">Edit</Button></td>
                       </tr>)}
                   })}
             </tbody>
@@ -370,7 +382,8 @@ function Search(){
             <td><Button onClick={() => { if (window.confirm(showCompanyInfo(company.companyId))) return }} color="warning">Detail</Button>
             {" "}<Button onClick={() => { if (window.confirm(removeCompanyConfirmation(company.companyId))) 
             deleteCompany(company.id, company.name, company.email, company.requestMethod, company.companyId, company.status, company._version)
-            }} color="warning">Remove Company</Button></td>
+            }} color="warning">Remove Company</Button>
+            {" "}<Button onClick={() => { if (window.confirm("Are you sure you would like to edit this company's information?")) CompanyEdit(company.companyId) }} color="warning">Edit</Button></td>
           </tr>)})}
             </tbody>
           </Table>
