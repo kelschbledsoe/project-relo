@@ -178,12 +178,12 @@ async function searchAgent()
   }
 
   function AgentEdit(id) {
-    var url = "EditAgent?id=" + encodeURIComponent(id);
+    var url = window.location.href + "/EditAgent?id=" + encodeURIComponent(id);
     window.location.href = url;
   }
 
   function CompanyEdit(id){
-    var url = "EditCompany?id=" + encodeURIComponent(id);
+    var url = window.location.href + "/EditCompany?id=" + encodeURIComponent(id);
     window.location.href = url;
   }
   
