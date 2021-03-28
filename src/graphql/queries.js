@@ -317,6 +317,7 @@ export const getCompany = /* GraphQL */ `
       email
       requestMethod
       companyId
+      status
       _version
       _deleted
       _lastChangedAt
@@ -338,6 +339,7 @@ export const listCompanys = /* GraphQL */ `
         email
         requestMethod
         companyId
+        status
         _version
         _deleted
         _lastChangedAt
@@ -368,6 +370,7 @@ export const syncCompanies = /* GraphQL */ `
         email
         requestMethod
         companyId
+        status
         _version
         _deleted
         _lastChangedAt

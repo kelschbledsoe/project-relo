@@ -44,6 +44,7 @@ type Company @model @auth(rules: [{allow: public}]) {
   email: String
   requestMethod: String
   companyId: Int
+  status: Int
 }
 
 type MortgageRequest @model @auth(rules: [{allow: public}]) {

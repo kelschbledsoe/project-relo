@@ -89,8 +89,8 @@ async function changeJihwanStatus()
     companyName: 'Quicken Loans',
     email: 'jihwan@jihwan.com',
     agentId: 47,
-    status: 1,
-    _version:35
+    status: 0,
+    _version:36
 
   };
   

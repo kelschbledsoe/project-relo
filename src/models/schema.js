@@ -349,6 +349,13 @@ export const schema = {
                     "type": "Int",
                     "isRequired": false,
                     "attributes": []
+                },
+                "status": {
+                    "name": "status",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
                 }
             },
             "syncable": true,
@@ -457,5 +464,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "44c5145f04a28124c1ed7a706eb6ee83"
+    "version": "0d3d5f73542cce4a59ea92255c5f62fb"
 };
