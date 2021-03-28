@@ -5,8 +5,6 @@ import { listAgents } from './../graphql/queries'
 import { listCompanys } from './../graphql/queries'
 import * as mutations from './../graphql/mutations';
 
-
-
 import {
   Button,
   Card,
@@ -18,8 +16,6 @@ import {
   Col,
   Spinner,
 } from "reactstrap";
-
-
 
 export default function Home(){
   const [agents, setAgents] = useState([])
@@ -71,33 +67,12 @@ async function searchAgent()
         status
         _version
       }
-
     }
-
   }
-  
-  
   `))
   console.log(search);
 }
 
-async function changeJihwanStatus()
-{
-  const todoDetails = {
-    id: '9e6afd4e-9566-4e22-8e0b-8950c7b1b430',
-    firstName: 'Jihwan',
-    lastName: 'Jihwan',
-    companyName: 'Quicken Loans',
-    email: 'jihwan@jihwan.com',
-    agentId: 47,
-    status: 0,
-    _version:36
-
-  };
-  
-  const updatedTodo = await API.graphql({ query: mutations.updateAgent, variables: {input: todoDetails}});
-  console.log(updatedTodo);
-}
   //Pop up detail for selected agent
   function showAgent(id){
     var agentName = " "
@@ -117,7 +92,6 @@ async function changeJihwanStatus()
         agentStatus = "Inactive"
       }}
     })
-   
     var confirmationMessage = 'Agent Information \n\n' + 
                               'ID: ' + id + '\n' +
                               'Name: ' + agentName + '\n' +
@@ -145,8 +119,7 @@ async function changeJihwanStatus()
         agentStatus = "Inactive"
       }}
     })
-   
-    var confirmationMessage = 'Are you sure you would like to change the status of this agent? \n Once confirmed, you must repeat this process to change the status again. \n\n' + 
+    var confirmationMessage = 'Are you sure you would like to change the status of this agent? \n Once confirmed, you must repeat this process to change the status again. \n Changes will be visible once you refresh the page. \n\n' + 
                               'ID: ' + id + '\n' +
                               'Name: ' + agentName + '\n' +
                               'Email: ' + agentEmail + '\n' 
@@ -169,7 +142,6 @@ async function changeJihwanStatus()
       companyMethod = company.requestMethod
       }
     })
-   
     var confirmationMessage = 'Company Information' + '\n\n' + 
                               'ID: ' + id + '\n' +
                               'Name: ' + companyName + '\n' +
@@ -194,9 +166,9 @@ async function changeJihwanStatus()
       companyMethod = company.requestMethod
       }
     })
-   
     var confirmationMessage = 'Are you sure you would like to remove this company from Project Relo?' + '\n' + 
-                              'This action cannot be undone once confirmed. ' + '\n\n' + 
+                              'This action cannot be undone once confirmed. ' + '\n' + 
+                              'Changes will be visible once you refresh the page. ' + '\n\n' + 
                               'ID: ' + id + '\n' +
                               'Name: ' + companyName + '\n' +
                               'Email: ' + companyEmail + '\n' + 
@@ -205,7 +177,38 @@ async function changeJihwanStatus()
     return confirmationMessage;  
   }
 
-  
+  // Function to update the agent information. Pass in all the agent values.
+  async function updateAgent(aid, afn, aln, acn, ae, aaid, as, av){
+    // Make this all the details of the existing agent and change any you want changed
+    // I know in this use case it's just to deactivate an agent but I'm putting this logic here incase I need it later
+    let newStatus = as === 1 ? 0:1;
+    const agentDetails={
+      id: aid,
+      firstName: afn,
+      lastName: aln,
+      companyName: acn,
+      email: ae,
+      agentId: aaid,
+      status: newStatus,
+      _version: av
+    };
+    const updatedTodo = await API.graphql({ query: mutations.updateAgent, variables: {input: agentDetails}});
+  }
+  // This doesn't actually delete the company from the table. It changes the status to 0.
+  // Might be good to rather say inactive or archived.
+  async function deleteCompany(cid, cn, ce, crm, ccid, cs, cv){
+    let newStatus = cs === 1 ? 0:1;
+    const companyDetails={
+      id: cid,
+      name: cn,
+      email: ce,
+      requestMethod: crm,
+      companyId: ccid,
+      status: newStatus,
+      _version: cv
+    };
+    const updatedTodo = await API.graphql({ query: mutations.updateCompany, variables: {input: companyDetails}});
+  }
     return (
       <>
       {isLoaded && (
@@ -234,7 +237,7 @@ async function changeJihwanStatus()
                         {
                         agents.map(function(agent)
                         {
-                          if(!agent.agentId || agent.companyName === "test"){
+                          if(!agent.agentId || agent.companyName === "test" || agent.status === 0){
                             return;
                           }
                           return(<tr>
@@ -244,7 +247,9 @@ async function changeJihwanStatus()
                           <td>{agent.email}</td>
                           <td><Button onClick={() => { if (window.confirm(showAgent(agent.agentId))) return }} color="warning">Detail</Button>
                           {/* {" "}<Button color="warning">Set as Inactive</Button></td> */}
-                          {" "}<Button onClick={() => { if (window.confirm(updateAgentStatusConfirmation(agent.agentId))) return }} color="warning">Set as Inactive</Button></td>
+                          {" "}<Button onClick={() => { if (window.confirm(updateAgentStatusConfirmation(agent.agentId)))
+                            updateAgent(agent.id, agent.firstName, agent.lastName, agent.companyName, agent.email, agent.agentId, agent.status, agent._version) }} 
+                            color="warning">Set as Inactive</Button></td>
                         </tr>)})}
                       </tbody>
                     </Table>
@@ -272,9 +277,9 @@ async function changeJihwanStatus()
                       </thead>
                       <tbody>
                         {
-                        companys.map(function(company,index)
+                        companys.map(function(company)
                         {
-                          if(!company.companyId){
+                          if(!company.companyId || company.status === 0){
                             return;
                           }
                           return(<tr>
@@ -283,7 +288,9 @@ async function changeJihwanStatus()
                           <td>{company.email}</td>
                           <td>{company.requestMethod}</td>
                           <td><Button onClick={() => { if (window.confirm(showCompanyInfo(company.companyId))) return }} color="warning">Detail</Button>
-                          {" "}<Button onClick={() => { if (window.confirm(removeCompanyConfirmation(company.companyId))) return }} color="warning">Remove Company</Button></td>
+                          {" "}<Button onClick={() => { if (window.confirm(removeCompanyConfirmation(company.companyId))) 
+                            deleteCompany(company.id, company.name, company.email, company.requestMethod, company.companyId, company.status, company._version)
+                          }} color="warning">Remove Company</Button></td>
                         </tr>)})}
                       </tbody>
                     </Table>
@@ -291,8 +298,7 @@ async function changeJihwanStatus()
                 </Card>
               </Col>
             </Row>
-            <button onClick={searchAgent}>SearchAgent</button>
-            <button onClick={changeJihwanStatus}>changeJihwanStatus</button>
+            {/* <button onClick={searchAgent}>SearchAgent</button> */}
           </div>
         </>
         )}

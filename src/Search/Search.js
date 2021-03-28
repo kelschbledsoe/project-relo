@@ -1,6 +1,7 @@
 import React, { useState, useReducer } from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listAgents, listCompanys } from './../graphql/queries';
+import * as mutations from './../graphql/mutations';
 import { Table, Button, Navbar, Container, 
   Nav, Form, FormGroup, Input, Card, 
   CardHeader, Row, Col, CardBody } from 'reactstrap';
@@ -117,7 +118,6 @@ function Search(){
     return confirmationMessage;
   }
 
-
   /// Confirmation message when changing agent status
   function updateAgentStatusConfirmation(id){
     var agentName = " "
@@ -137,7 +137,6 @@ function Search(){
         agentStatus = "Inactive"
       }}
     })
-   
     var confirmationMessage = 'Are you sure you would like to change the status of this agent? \nOnce confirmed, you must repeat this process to change the status again. \n\n' + 
                               'ID: ' + id + '\n' +
                               'Name: ' + agentName + '\n' +
@@ -161,7 +160,6 @@ function Search(){
       companyMethod = company.requestMethod
       }
     })
-   
     var confirmationMessage = 'Company Information' + '\n\n' + 
                               'ID: ' + id + '\n' +
                               'Name: ' + companyName + '\n' +
@@ -186,7 +184,6 @@ function Search(){
       companyMethod = company.requestMethod
       }
     })
-   
     var confirmationMessage = 'Are you sure you would like to remove this company from Project Relo?' + '\n' + 
                               'This action cannot be undone once confirmed. ' + '\n\n' + 
                               'ID: ' + id + '\n' +
@@ -197,6 +194,35 @@ function Search(){
     return confirmationMessage;  
   }
 
+  async function updateAgent(aid, afn, aln, acn, ae, aaid, as, av){
+    // Hey look I needed the logic lol
+    let newStatus = as === 1 ? 0:1;
+    const agentDetails={
+      id: aid,
+      firstName: afn,
+      lastName: aln,
+      companyName: acn,
+      email: ae,
+      agentId: aaid,
+      status: newStatus,
+      _version: av
+    };
+    const updatedTodo = await API.graphql({ query: mutations.updateAgent, variables: {input: agentDetails}});
+  }
+  async function deleteCompany(cid, cn, ce, crm, ccid, cs, cv){
+    let newStatus = cs === 1 ? 0:1;
+    const companyDetails={
+      id: cid,
+      name: cn,
+      email: ce,
+      requestMethod: crm,
+      companyId: ccid,
+      status: newStatus,
+      _version: cv
+    };
+    const updatedTodo = await API.graphql({ query: mutations.updateCompany, variables: {input: companyDetails}});
+
+  }
     return(
       <>
         <div className="content">
@@ -279,7 +305,7 @@ function Search(){
               agents.map(function(agent)
               {
                 let status;
-                agent.status === 1 ? status="Active":status="Completed";
+                agent.status === 1 ? status="Active":status="Deactivated";
                 if(!agent.agentId || agent.companyName === "test"){
                   return;
                 }
@@ -292,7 +318,9 @@ function Search(){
                   <td>{status}</td>
                   <td><Button onClick={() => { if (window.confirm(showAgent(agent.agentId))) return }} color="warning">Detail</Button>
                             {/* {" "}<Button color="warning">Set as Inactive</Button></td> */}
-                            {" "}<Button onClick={() => { if (window.confirm(updateAgentStatusConfirmation(agent.agentId))) return }} color="warning">Set as Inactive</Button></td>
+                            {" "}<Button onClick={() => { if (window.confirm(updateAgentStatusConfirmation(agent.agentId))) 
+                            updateAgent(agent.id, agent.firstName, agent.lastName, agent.companyName, agent.email, agent.agentId, agent.status, agent._version)
+                            }} color="warning">Set as Inactive</Button></td>
                   </tr>)}
                   else{
                     return(<tr>
@@ -300,9 +328,12 @@ function Search(){
                       <td>{agent.firstName} {agent.lastName}</td>
                       <td>{agent.companyName}</td>
                       <td>{agent.email}</td>
+                      <td>{status}</td>
                       <td><Button onClick={() => { if (window.confirm(showAgent(agent.agentId))) return }} color="warning">Detail</Button>
                                 {/* {" "}<Button color="warning">Set as Inactive</Button></td> */}
-                                {" "}<Button onClick={() => { if (window.confirm(updateAgentStatusConfirmation(agent.agentId))) return }} color="warning">Set as Active</Button></td>
+                                {" "}<Button onClick={() => { if (window.confirm(updateAgentStatusConfirmation(agent.agentId))) 
+                                updateAgent(agent.id, agent.firstName, agent.lastName, agent.companyName, agent.email, agent.agentId, agent.status, agent._version)
+                                }} color="warning">Set as Active</Button></td>
                       </tr>)}
                   })}
             </tbody>
@@ -317,13 +348,17 @@ function Search(){
                 <th>Name</th>
                 <th>Email</th>
                 <th>Method</th>
+                <th>Status</th>
                 <th>Options</th>
               </tr>
             </thead>
             <tbody>
             {companys.map(function(company)
           {
-            if(!company.companyId){
+            let status;
+            company.status === 1 ? status="Active":status="Deactivated";
+            // We're rolling with if a company is "deleted" you can't search for it but idk if that's right
+            if(!company.companyId || company.status !== 1){
               return;
             }
             return(<tr>
@@ -331,8 +366,11 @@ function Search(){
             <td>{company.name}</td>
             <td>{company.email}</td>
             <td>{company.requestMethod}</td>
+            <td>{status}</td>
             <td><Button onClick={() => { if (window.confirm(showCompanyInfo(company.companyId))) return }} color="warning">Detail</Button>
-            {" "}<Button onClick={() => { if (window.confirm(removeCompanyConfirmation(company.companyId))) return }} color="warning">Remove Company</Button></td>
+            {" "}<Button onClick={() => { if (window.confirm(removeCompanyConfirmation(company.companyId))) 
+            deleteCompany(company.id, company.name, company.email, company.requestMethod, company.companyId, company.status, company._version)
+            }} color="warning">Remove Company</Button></td>
           </tr>)})}
             </tbody>
           </Table>

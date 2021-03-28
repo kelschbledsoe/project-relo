@@ -1,6 +1,7 @@
 import React, { useState, useReducer } from 'react';
 import { API, graphqlOperation } from 'aws-amplify'
 import { listClients} from './../graphql/queries'
+import * as mutations from './../graphql/mutations';
 import { Table, Button, Navbar, Container, Nav, 
   Form, FormGroup, Input, Card, CardHeader, Row, Col, CardBody } from 'reactstrap';
 
@@ -64,7 +65,6 @@ function ClientList(){
     });
   }
 
-
     //Pop up detail for selected client
     function showClient(id){
       var clientName = " "
@@ -90,7 +90,6 @@ function ClientList(){
   
         }
       })
-     
       var confirmationMessage = 'Client Information \n\n' + 
                                 'ID: ' + id + '\n' +
                                 'Name: ' + clientName + '\n' +
@@ -105,16 +104,33 @@ function ClientList(){
       return confirmationMessage;
     }
   
-  
     /// Confirmation message when changing client status to complete
     function updateClientStatusConfirmation(id){
-        
-       
-      var confirmationMessage = 'Are you sure you would like to mark this client as completed? \n Once confirmed, this information will not be shown in the home page. \n\n'  
-                                  
-                                  
+      var confirmationMessage = 'Are you sure you would like to mark this client as completed? \n Once confirmed, this information will not be shown in the home page. \n\n'                     
       return confirmationMessage;    
     }
+
+  async function updateClient(cid, cfn, cln, ccid, caid, cp, ce, cca, ccc, ccs, ccz, cnl, cs, cv){
+    // Hey look I needed the logic lol
+    let newStatus = cs === 1 ? 0:1;
+    const clientDetails={
+      id: cid,
+      firstName: cfn,
+      lastName: cln,
+      clientId: ccid,
+      agentId: caid,
+      phone: cp,
+      email: ce,
+      curAddress: cca,
+      curCity: ccc,
+      curState: ccs,
+      curZip: ccz,
+      newLocation: cnl,
+      status: newStatus,
+      _version: cv
+    };
+    const updatedTodo = await API.graphql({ query: mutations.updateClient, variables: {input: clientDetails}});
+  }
 
   return(
     <>
@@ -194,7 +210,9 @@ function ClientList(){
               <td>{client.email}</td>
               <td>{status}</td>
               <td><Button onClick={()=>{ alert(showClient(client.clientId)); }} color="warning">Detail</Button>
-              {" "}<Button onClick={() => { if (window.confirm(updateClientStatusConfirmation(client.clientId))) return }} color="warning">Mark as Complete</Button></td>
+              {" "}<Button onClick={() => { if (window.confirm(updateClientStatusConfirmation(client.clientId))) 
+              updateClient(client.id, client.firstName, client.lastName, client.clientId, client.agentId, client.phone, client.email, client.curAddress, client.curCity, client.curState, client.curZip, client.newLocation, client.status, client._version)
+              }} color="warning">Mark as Complete</Button></td>
             </tr>)}
             else{
               return(<tr>
