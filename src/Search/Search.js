@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useReducer } from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listAgents, listCompanys } from './../graphql/queries';
 import { Table, Button, Navbar, Container, 
@@ -31,8 +31,12 @@ function Search(){
   const [agents, setAgents] = useState([])
   let listofagents;
   let listofcompanys;
+  /*
+    I know this is the complete wrong way to implement a search page. The back-end team would not properly
+    create a query for me to actually implement the search page. This was the only way I could get something
+    functional in time.
+  */
   async function queryCompany(){
-      /* make page take longer to load await new Promise(x=>setTimeout(x,10000)) */
       const models = await API.graphql(graphqlOperation(listCompanys))
       listofcompanys = models.data.listCompanys.items
       if(listofcompanys){
@@ -104,7 +108,6 @@ function Search(){
         agentStatus = "Inactive"
       }}
     })
-   
     var confirmationMessage = 'Agent Information \n\n' + 
                               'ID: ' + id + '\n' +
                               'Name: ' + agentName + '\n' +
@@ -113,15 +116,95 @@ function Search(){
                               
     return confirmationMessage;
   }
+
+
+  /// Confirmation message when changing agent status
+  function updateAgentStatusConfirmation(id){
+    var agentName = " "
+    var agentEmail = " "
+    var agentStatus = " "
+    agents.map(function(agent){
+      if(!agent.agentId || agent.companyName === "test"){
+        return;
+      }
+      if (Number(id) === Number(agent.agentId)){
+      agentName = agent.firstName + " " + agent.lastName;
+      agentEmail = agent.email
+      if (agent.status === 1){
+        agentStatus = "Active"
+      }
+      else{
+        agentStatus = "Inactive"
+      }}
+    })
+   
+    var confirmationMessage = 'Are you sure you would like to change the status of this agent? \nOnce confirmed, you must repeat this process to change the status again. \n\n' + 
+                              'ID: ' + id + '\n' +
+                              'Name: ' + agentName + '\n' +
+                              'Email: ' + agentEmail + '\n' 
+                              
+    return confirmationMessage;    
+  }
+
+  //Pop up detail for selected company
+  function showCompanyInfo(id){
+    var companyName = " "
+    var companyEmail = " "
+    var companyMethod = " "
+    companys.map(function(company){
+      if(!company.companyId){
+        return;
+      }
+      if (Number(id) === Number(company.companyId)){
+      companyName = company.name;
+      companyEmail = company.email
+      companyMethod = company.requestMethod
+      }
+    })
+   
+    var confirmationMessage = 'Company Information' + '\n\n' + 
+                              'ID: ' + id + '\n' +
+                              'Name: ' + companyName + '\n' +
+                              'Email: ' + companyEmail + '\n' + 
+                              'Request Method: ' + companyMethod + '\n'
+                              
+    return confirmationMessage;  
+  }
+  
+  /// Confirmation message when removing company
+  function removeCompanyConfirmation(id){
+    var companyName = " "
+    var companyEmail = " "
+    var companyMethod = " "
+    companys.map(function(company){
+      if(!company.companyId){
+        return;
+      }
+      if (Number(id) === Number(company.companyId)){
+      companyName = company.name;
+      companyEmail = company.email
+      companyMethod = company.requestMethod
+      }
+    })
+   
+    var confirmationMessage = 'Are you sure you would like to remove this company from Project Relo?' + '\n' + 
+                              'This action cannot be undone once confirmed. ' + '\n\n' + 
+                              'ID: ' + id + '\n' +
+                              'Name: ' + companyName + '\n' +
+                              'Email: ' + companyEmail + '\n' + 
+                              'Request Method: ' + companyMethod + '\n'
+                              
+    return confirmationMessage;  
+  }
+
     return(
       <>
-      
         <div className="content">
           <Row>
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <h5 className="title">Admin Search Section</h5>
+                  <h5 className="title">Admin Search</h5>
                   <Navbar expand="lg">
                     <Container>
                       <Nav className="justify-content-left">
@@ -187,6 +270,7 @@ function Search(){
                 <th>Name</th>
                 <th>Company</th>
                 <th>Email</th>
+                <th>Status</th>
                 <th>Options</th>
               </tr>
             </thead>
@@ -194,6 +278,8 @@ function Search(){
             {
               agents.map(function(agent)
               {
+                let status;
+                agent.status === 1 ? status="Active":status="Completed";
                 if(!agent.agentId || agent.companyName === "test"){
                   return;
                 }
@@ -203,10 +289,10 @@ function Search(){
                   <td>{agent.firstName} {agent.lastName}</td>
                   <td>{agent.companyName}</td>
                   <td>{agent.email}</td>
+                  <td>{status}</td>
                   <td><Button onClick={() => { if (window.confirm(showAgent(agent.agentId))) return }} color="warning">Detail</Button>
                             {/* {" "}<Button color="warning">Set as Inactive</Button></td> */}
-                            {" "}<Button color="warning">Set as Inactive</Button></td>
-
+                            {" "}<Button onClick={() => { if (window.confirm(updateAgentStatusConfirmation(agent.agentId))) return }} color="warning">Set as Inactive</Button></td>
                   </tr>)}
                   else{
                     return(<tr>
@@ -216,11 +302,9 @@ function Search(){
                       <td>{agent.email}</td>
                       <td><Button onClick={() => { if (window.confirm(showAgent(agent.agentId))) return }} color="warning">Detail</Button>
                                 {/* {" "}<Button color="warning">Set as Inactive</Button></td> */}
-                                {" "}<Button color="warning">Set as Active</Button></td>
-    
+                                {" "}<Button onClick={() => { if (window.confirm(updateAgentStatusConfirmation(agent.agentId))) return }} color="warning">Set as Active</Button></td>
                       </tr>)}
-                  })})
-              
+                  })}
             </tbody>
           </Table>
         </CardBody>
@@ -247,13 +331,13 @@ function Search(){
             <td>{company.name}</td>
             <td>{company.email}</td>
             <td>{company.requestMethod}</td>
-            <td><Button href="/AdminCompanyDetail" color="warning">Detail</Button></td>
+            <td><Button onClick={() => { if (window.confirm(showCompanyInfo(company.companyId))) return }} color="warning">Detail</Button>
+            {" "}<Button onClick={() => { if (window.confirm(removeCompanyConfirmation(company.companyId))) return }} color="warning">Remove Company</Button></td>
           </tr>)})}
             </tbody>
           </Table>
         </CardBody>
       </div>
-      
         </>
     );
 }
