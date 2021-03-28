@@ -46,6 +46,104 @@ export default function Home(){
     querymortgageRequests()
   }, [setIsLoaded])
   
+
+  //Pop up detail for selected client
+  function showClient(id){
+    var clientName = " "
+    var clientPhone = " "
+    var clientAddress = " "
+    var clientEmail = " "
+    var clientNew = " "
+    var clientAgent = " "
+    var clientStatus = " "
+    
+    clients.map(function(client){
+      let status;
+      client.status === 1 ? status="Active":status="Completed";
+
+      if (Number(id) === Number(client.clientId)){
+      clientName = client.firstName + " " + client.lastName;
+      clientEmail = client.email
+      clientStatus = status
+      clientPhone = client.phone
+      clientAddress = client.curAddress + " " + client.curCity + ", " + client.curZip
+      clientNew = client.newLocation
+      clientAgent = client.agentId
+
+      }
+    })
+   
+    var confirmationMessage = 'Client Information \n\n' + 
+                              'ID: ' + id + '\n' +
+                              'Name: ' + clientName + '\n' +
+                              'Phone Number: ' + clientPhone + '\n' +
+                              'Email: ' + clientEmail + '\n' +
+                              'Current Address: ' + clientAddress + '\n' +
+                              'New Location: ' + clientNew + '\n' + 
+                              'Agent ID: ' + clientAgent + '\n' +
+                              'Status: ' + clientStatus + "\n" 
+
+                              
+    return confirmationMessage;
+  }
+
+
+    /// Confirmation message when changing client status to complete
+    function updateClientStatusConfirmation(id){
+      
+     
+      var confirmationMessage = 'Are you sure you would like to mark this client as completed? \n Once confirmed, this information will not be shown in the home page. \n\n'  
+                                
+                                
+      return confirmationMessage;    
+    }
+
+      //Pop up detail for selected client
+  function showMortgageRequest(id){
+    var requestStatus = ' '
+    var requestRelocationId = ' '
+    var requestClientId = ' '
+    var requestAgentId = ' '
+    var requestCompanyId = ' '
+
+
+    
+    mortgageRequests.map(function(request){
+      let status;
+      request.status === 1 ? status="Active":status="Completed";
+
+      if (Number(id) === Number(request.mortgageId)){
+      requestStatus = status
+      requestRelocationId = request.relocationId
+      requestClientId = request.clientId
+      requestAgentId = request.agentId
+      requestCompanyId = request.companyId
+
+      }
+    })
+   
+    var confirmationMessage = 'Mortgage Request Information \n\n' + 
+                              'ID: ' + id + '\n' +
+                              'Company ID: ' + requestCompanyId + '\n' +
+                              'Relocation ID: ' + requestRelocationId + '\n' + 
+                              'Client ID: ' + requestClientId + '\n' + 
+                              'Agent ID: ' + requestAgentId + '\n' +
+                              'Status: ' + requestStatus + "\n" 
+
+                              
+    return confirmationMessage;
+  }
+
+  /// Confirmation message when changing client status to complete
+  function updateMortgageStatusConfirmation(id){
+      
+     
+    var confirmationMessage = 'Are you sure you would like to mark this mortgage request as completed? \n Once confirmed, this information will not be shown in the home page. \n\n'  
+                                  
+                                  
+    return confirmationMessage;    
+  }
+
     return (
       <>
       {isLoaded && (
@@ -85,8 +183,9 @@ export default function Home(){
                           <td>{client.firstName} {client.lastName}</td>
                           <td>{client.email}</td>
                           <td>{status}</td>
-                          <td><Button href="/ClientDetail" color="warning">Detail</Button>
-                          {" "}<Button href="/ClientDetail" color="warning">Mark as Complete</Button></td>
+                          <td><Button onClick={()=>{ alert(showClient(client.clientId)); }} color="warning">Detail</Button>
+                          {" "}<Button onClick={() => { if (window.confirm(updateClientStatusConfirmation(client.clientId))) return }} color="warning">Mark as Complete</Button>
+                          {" "}<Button href='/AdditionalRequest' color="warning">Create Additional Request</Button></td>
                         </tr>)})}
                       </tbody>
                     </Table>
@@ -127,8 +226,8 @@ export default function Home(){
                           <td>{request.companyId}</td>
                           <td>{request.clientId}</td>
                           <td>{status}</td>
-                          <td><Button href="/CompanyDetail" color="warning">Detail</Button>
-                          {" "}<Button color="warning">Mark as Complete</Button></td>
+                          <td><Button onClick={()=>{ alert(showMortgageRequest(request.mortgageId)); }} color="warning">Detail</Button>
+                          {" "}<Button onClick={() => { if (window.confirm(updateMortgageStatusConfirmation(request.mortgageId))) return }} color="warning">Mark as Complete</Button></td>
                         </tr>)})}
                       </tbody>
                     </Table>

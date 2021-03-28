@@ -146,7 +146,7 @@ async function changeJihwanStatus()
       }}
     })
    
-    var confirmationMessage = 'Are you sure you would like to set this agent as inactive? \n\n' + 
+    var confirmationMessage = 'Are you sure you would like to change the status of this agent? \n Once confirmed, you must repeat this process to change the status again. \n\n' + 
                               'ID: ' + id + '\n' +
                               'Name: ' + agentName + '\n' +
                               'Email: ' + agentEmail + '\n' 
