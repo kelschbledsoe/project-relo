@@ -18,6 +18,7 @@ const Navigation = (props) => {
                     <Nav.Link href="/AddAgent">Add Agent</Nav.Link>
                     <Nav.Link href="/AddCompany">Add Company</Nav.Link>
                     <Nav.Link href="/Search">Search</Nav.Link>
+                    <Nav.Link href='/Edit'>Edit</Nav.Link>
                     <Nav.Link href="/">{""}</Nav.Link>
                     <Nav.Link href="/">{""}</Nav.Link>
                     <Nav.Link href="/">{""}</Nav.Link>
@@ -25,6 +26,7 @@ const Navigation = (props) => {
                     <Nav.Link href="/Home-Agent">Agent:</Nav.Link>
                     <Nav.Link href="/NewRequest">New Request</Nav.Link>
                     <Nav.Link href="/ClientList">Client List</Nav.Link>
+                    <Nav.Link href='/AdditionalRequest'>Create Additional Mortgage Request</Nav.Link>
                     <AmplifySignOut></AmplifySignOut>
                 </Nav>
             </Navbar.Collapse>

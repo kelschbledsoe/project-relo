@@ -209,8 +209,7 @@ export default function Home(){
                           <td><Button onClick={()=>{ alert(showClient(client.clientId)); }} color="warning">Detail</Button>
                           {" "}<Button onClick={() => { if (window.confirm(updateClientStatusConfirmation(client.clientId))) 
                           updateClient(client.id, client.firstName, client.lastName, client.clientId, client.agentId, client.phone, client.email, client.curAddress, client.curCity, client.curState, client.curZip, client.newLocation, client.status, client._version)
-                          }} color="warning">Mark as Complete</Button>
-                          {" "}<Button href='/AdditionalRequest' color="warning">Create Additional Request</Button></td>
+                          }} color="warning">Mark as Complete</Button></td>
                         </tr>)})}
                       </tbody>
                     </Table>

@@ -28,13 +28,20 @@ function AdditionalRequest() {
                   Add Additional Mortgage Request
                 </CardHeader>
                 <CardHeader>Please complete all fields to submit your request.</CardHeader>
-                <CardHeader>Enter the ID of the client you would like to make additional mortgage request for, then select the company you would like to send the request to.</CardHeader>
+                <CardHeader>Enter your ID and the ID of the client you would like to make additional mortgage request for, then select the company you would like to send the request to.</CardHeader>
                 <CardBody>
                   <Form>
                     <Row>
                       <Col className="pr-md-1" md="6">
                         <FormGroup>
                           <label>Client ID</label>
+                          <Input
+                            placeholder="ID"
+                            type="text"
+                          />
+                        </FormGroup>
+                        <FormGroup>
+                          <label>Agent ID</label>
                           <Input
                             placeholder="ID"
                             type="text"

@@ -261,8 +261,7 @@ async function searchAgent()
                           {/* {" "}<Button color="warning">Set as Inactive</Button></td> */}
                           {" "}<Button onClick={() => { if (window.confirm(updateAgentStatusConfirmation(agent.agentId)))
                             updateAgent(agent.id, agent.firstName, agent.lastName, agent.companyName, agent.email, agent.agentId, agent.status, agent._version) }} 
-                            color="warning">Set as Inactive</Button>
-                            {" "}<Button onClick={() => { if (window.confirm("Are you sure you would like to edit this agent's information?")) AgentEdit(agent.agentId) }} color="warning">Edit</Button></td>
+                            color="warning">Set as Inactive</Button></td>
                         </tr>)})}
                       </tbody>
                     </Table>
@@ -303,8 +302,7 @@ async function searchAgent()
                           <td><Button onClick={() => { if (window.confirm(showCompanyInfo(company.companyId))) return }} color="warning">Detail</Button>
                           {" "}<Button onClick={() => { if (window.confirm(removeCompanyConfirmation(company.companyId))) 
                             deleteCompany(company.id, company.name, company.email, company.requestMethod, company.companyId, company.status, company._version)
-                          }} color="warning">Remove Company</Button>
-                          {" "}<Button onClick={() => { if (window.confirm("Are you sure you would like to edit this company's information?")) CompanyEdit(company.companyId) }} color="warning">Edit</Button></td>
+                          }} color="warning">Remove Company</Button></td>
                         </tr>)})}
                       </tbody>
                     </Table>
