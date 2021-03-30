@@ -18,7 +18,8 @@ const Navigation = (props) => {
                     <Nav.Link href="/AddAgent">Add Agent</Nav.Link>
                     <Nav.Link href="/AddCompany">Add Company</Nav.Link>
                     <Nav.Link href="/Search">Search</Nav.Link>
-                    <Nav.Link href='/Edit'>Edit</Nav.Link>
+                    <Nav.Link href='/EditAgent'>Edit Agent</Nav.Link>
+                    <Nav.Link href='/EditCompany'>Edit Company</Nav.Link>
                     <Nav.Link href="/">{""}</Nav.Link>
                     <Nav.Link href="/">{""}</Nav.Link>
                     <Nav.Link href="/">{""}</Nav.Link>
