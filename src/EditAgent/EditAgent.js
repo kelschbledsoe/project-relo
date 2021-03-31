@@ -38,6 +38,66 @@ const formReducer = (state, event) => {
   }
 
 function EditAgent(){
+  let listofagents;
+  
+  async function updateAgent(){
+    const models = await API.graphql(graphqlOperation(listAgents));
+    listofagents = models.data.listAgents.items;
+    // I have to set it to an Amazon ID for typing reasons and so it's never null (API rule)
+    let aid=listofagents[0].id;
+    let afn, aln, acn, ae, aaid, newStatus, av;
+    listofagents.map(function(agent)
+    {
+      if(agent.agentId && agent.companyName !== "test"){
+        if(Number(agent.agentId) === Number(formData.AgentID)){
+          // When the page first loads, the fields are default undefined. but after one submit they're ''
+          if(formData.First !== undefined && formData.First !== ''){
+            afn = formData.First;
+          }
+          else{
+            afn = agent.firstName;
+          }
+          if(formData.Last !== undefined && formData.Last !== ''){
+            aln = formData.Last;
+          }
+          else{
+            aln = agent.lastName;
+          }
+          if(formData.Company !== undefined && formData.Company !== ''){
+            acn = formData.Company;
+          }
+          else{
+            acn = agent.companyName;
+          }
+          if(formData.Email !== undefined && formData.Email !== ''){
+            ae = formData.Email;
+          }
+          else{
+            ae = agent.email;
+          }
+          if(agent.id !== null){
+            aid = agent.id;
+          }
+          
+          aaid = agent.agentId;
+          newStatus = agent.status;
+          av = agent._version;
+        }
+      }
+    })
+    // I have to make the new entry this way
+    const agentDetails={
+      id: aid,
+      firstName: afn,
+      lastName: aln,
+      companyName: acn,
+      email: ae,
+      agentId: aaid,
+      status: newStatus,
+      _version: av
+    };
+    const updatedTodo = await API.graphql({ query: mutations.updateAgent, variables: {input: agentDetails}});
+  }
 
     //Setting Confirmation Statement for adding new agent
     function confirmationAgent(){
@@ -76,27 +136,6 @@ function EditAgent(){
     });
   }
   
-  const [agents, setAgents] = useState([])
-  const [companys, setCompanys] = useState([])
-  const [isLoaded, setIsLoaded] = useState(false)
-  let listofagents;
-  // Sorry this is spelt wrong. That's the back-end team's fault and I don't want to change the convention
-  let listofcompanys;
-  // render page
-  useEffect(() => {
-    async function queryAgent(){
-      /* make page take longer to load await new Promise(x=>setTimeout(x,10000)) */
-      const models = await API.graphql(graphqlOperation(listAgents))
-      listofagents = models.data.listAgents.items
-      if(listofagents){
-        setAgents(listofagents);
-        setIsLoaded(true);
-      }
-    }
-    queryAgent()
-  }, [setIsLoaded])
-
-
     return (
       <>
         <div className="content">
@@ -116,7 +155,7 @@ function EditAgent(){
                           <Input
                             placeholder="Agent ID"
                             type="text"
-                            name="ID"
+                            name="AgentID"
                             onChange={handleChange}
                             value={formData.AgentID || ''}
                             
@@ -200,14 +239,12 @@ function EditAgent(){
                     </Row>
                     <CardFooter>
                       <Button color="warning" href='/'>Back</Button>{' '}
-                      <Button className="btn-fill" color="warning" type="submit" onClick={() => { if (window.confirm(confirmationAgent())) return }}>
+                      <Button className="btn-fill" color="warning" type="submit" onClick={() => { if (window.confirm(confirmationAgent())) updateAgent(); }}>
                         Submit
                       </Button>
-                      
                     </CardFooter>
                   </Form>
                 </CardBody>
-                
               </Card>
             </Col>
           </Row>
