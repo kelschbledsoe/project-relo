@@ -1,10 +1,7 @@
 import React, { useReducer, useState, useEffect } from 'react';
-import { DataStore } from '@aws-amplify/datastore';
 import { API, graphqlOperation } from 'aws-amplify'
-import { Agent } from './../models';
-import { listAgents } from './../graphql/queries'
+import { listCompanys } from './../graphql/queries'
 import * as mutations from './../graphql/mutations';
-
 
 // reactstrap components
 import {
@@ -38,7 +35,54 @@ const formReducer = (state, event) => {
   }
 
 function EditCompany(){
-
+  let listofcompanys;
+  async function updateCompany(){
+    const models = await API.graphql(graphqlOperation(listCompanys))
+    listofcompanys = models.data.listCompanys.items;
+    // I have to set it to an Amazon ID for typing reasons and so it's never null (API rule)
+    let cid=listofcompanys[0].id;
+    let cn, ce, crm, ccid, newStatus, cv;
+    listofcompanys.map(function(company)
+    {
+      if(company.companyId){
+        if(Number(company.companyId) === Number(formData.CompanyID)){
+          // When the page first loads, the fields are default undefined. but after one submit they're ''
+          if(formData.CompanyName !== undefined && formData.CompanyName !== ''){
+            cn = formData.CompanyName;
+          }
+          else{
+            cn = company.name;
+          }
+          if(formData.CompanyEmail !== undefined && formData.CompanyEmail !== ''){
+            ce = formData.CompanyEmail;
+          }
+          else{
+            ce = company.email;
+          }
+          if(formData.Method !== undefined && formData.Method !== ''){
+            crm = formData.Method;
+          }
+          else{
+            crm = company.requestMethod;
+          }
+          cid = company.id;
+          ccid = company.companyId;
+          newStatus = company.status;
+          cv = company._version;
+        }
+      }
+    })
+    const companyDetails={
+      id: cid,
+      name: cn,
+      email: ce,
+      requestMethod: crm,
+      companyId: ccid,
+      status: newStatus,
+      _version: cv
+    };
+    const updatedTodo = await API.graphql({ query: mutations.updateCompany, variables: {input: companyDetails}});
+  }
     //Setting Confirmation Statement for adding new agent
     function confirmationCompany(){
       const name = formData.CompanyName;
@@ -73,13 +117,6 @@ function EditCompany(){
     });
   }
   
-  const [companys, setCompanys] = useState([])
-  const [isLoaded, setIsLoaded] = useState(false)
-  // Sorry this is spelt wrong. That's the back-end team's fault and I don't want to change the convention
-  let listofcompanys;
-
-
-
     return (
       <>
         <div className="content">
@@ -99,7 +136,7 @@ function EditCompany(){
                           <Input
                             placeholder="Company ID"
                             type="text"
-                            name="ID"
+                            name="CompanyID"
                             onChange={handleChange}
                             value={formData.CompanyID || ''}
                             
@@ -129,7 +166,7 @@ function EditCompany(){
                           <Input
                             placeholder="Company Name"
                             type="text"
-                            name="Company"
+                            name="CompanyName"
                             onChange={handleChange}
                             value={formData.CompanyName || ''}
                             
@@ -142,7 +179,7 @@ function EditCompany(){
                           <Input
                             placeholder="Company Email"
                             type="text"
-                            name="Email"
+                            name="CompanyEmail"
                             onChange={handleChange}
                             value={formData.CompanyEmail || ''}
                             
@@ -164,7 +201,7 @@ function EditCompany(){
                   </FormGroup>
                     <CardFooter>
                       <Button color="warning" href='/'>Back</Button>{' '}
-                      <Button className="btn-fill" color="warning" type="submit" onClick={() => { if (window.confirm(confirmationCompany())) return }}>
+                      <Button className="btn-fill" color="warning" type="submit" onClick={() => { if (window.confirm(confirmationCompany())) updateCompany() }}>
                         Submit
                       </Button>
                     </CardFooter>
