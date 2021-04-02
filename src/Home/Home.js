@@ -4,6 +4,7 @@ import { API, graphqlOperation } from 'aws-amplify'
 import { listAgents } from './../graphql/queries'
 import { listCompanys } from './../graphql/queries'
 import * as mutations from './../graphql/mutations';
+import { request } from "graphql-request";
 
 import {
   Button,
@@ -71,6 +72,43 @@ async function searchAgent()
   }
   `))
   console.log(search);
+}
+
+async function APIrequest()
+{
+
+  //request("https://g3qoseczgfgqlbpalmvzisip4e.appsync-api.us-east-2.amazonaws.com/graphql", query)
+  //.then(console.log)
+  //.catch(console.error);
+
+  const query = `
+  query searchAgent  {
+    listAgents (filter:{ firstName:{ contains:"Jihwan"}})
+    {
+      items{
+        id
+        firstName
+        lastName
+        email
+        companyName
+        agentId
+        status
+        _version
+      }
+    }
+  }
+  `;
+const url = "https://g3qoseczgfgqlbpalmvzisip4e.appsync-api.us-east-2.amazonaws.com/graphql";
+const opts = {
+  method: "POST",
+  headers: { "Content-Type": "application/json", "x-api-key": "da2-7juiai3t5bei5myz6gtp6vwjci"},
+  body: JSON.stringify({ query })
+};
+fetch(url, opts)
+  .then(res => res.json())
+  .then(console.log)
+  .catch(console.error);
+
 }
 
   //Pop up detail for selected agent
@@ -308,6 +346,7 @@ async function searchAgent()
                     </Table>
                   </CardBody>
                 </Card>
+                <Button onClick={APIrequest}>Request</Button>
               </Col>
             </Row>
             {/* <button onClick={searchAgent}>SearchAgent</button> */}
