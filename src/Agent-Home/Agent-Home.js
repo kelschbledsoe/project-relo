@@ -229,7 +229,8 @@ export default function Home(){
                       <thead className="text-primary">
                         <tr>
                           <th>ID</th>
-                          {/* Doing company ID instead of company name here b/c that's what I have stored. Can change if needed. */}
+                          {/* It would be a better UX to show the client's name and company's name but that's not how backend
+                          set up the database or the queries. If I forcefully implemented that it would be super messy. */}
                           <th>Company ID</th> 
                           <th>Client ID</th>
                           <th>Status</th>

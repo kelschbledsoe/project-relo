@@ -168,7 +168,42 @@ function NewRequest() {
     });
   }
 
-  
+  async function APIrequest()
+{
+
+  //request("https://g3qoseczgfgqlbpalmvzisip4e.appsync-api.us-east-2.amazonaws.com/graphql", query)
+  //.then(console.log)
+  //.catch(console.error);
+
+  const query = `
+  query searchAgent  {
+    listAgents (filter:{ firstName:{ contains:"Jihwan"}})
+    {
+      items{
+        id
+        firstName
+        lastName
+        email
+        companyName
+        agentId
+        status
+        _version
+      }
+    }
+  }
+  `;
+const url = "https://g3qoseczgfgqlbpalmvzisip4e.appsync-api.us-east-2.amazonaws.com/graphql";
+const opts = {
+  method: "POST",
+  headers: { "Content-Type": "application/json", "x-api-key": "da2-7juiai3t5bei5myz6gtp6vwjci"},
+  body: JSON.stringify({ query })
+};
+fetch(url, opts)
+  .then(res => res.json())
+  .then(console.log)
+  .catch(console.error);
+
+}
     return (
       <>
         <div className="content">
@@ -311,7 +346,27 @@ function NewRequest() {
                     </Col>
                   </FormGroup>
                   <Button color="warning" href='/'>Back</Button>{' '}
-                  <Button onClick={() => { if (window.confirm(confirmationTemplate())) emailSubmit(); createRequest()}} color="warning" type="submit">Submit</Button>
+                  <Button onClick={() => 
+                  /* If they hit confirm on the popup window, check the company's request method.
+                  Again, I know this isn't how I should do it, but it's the only way I can. */
+                    { if (window.confirm(confirmationTemplate())){
+                      companys.map(function(company)
+                        {
+                          if(String(company.name) === String(formData.Company)){
+                            /* Create the request based on the company's method then exit the loop. */
+                            if(String(company.requestMethod) === "API"){
+                              // APIrequest();
+                              createRequest();
+                              return;
+                            }
+                            else if(String(company.requestMethod) === "Email"){
+                              emailSubmit(); 
+                              createRequest();
+                              return;
+                            }
+                          }
+                        })}}}
+                    color="warning" type="submit">Submit</Button>
                   </Form>
                   </div>
                 </CardBody>

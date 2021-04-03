@@ -4,7 +4,7 @@ import { API, graphqlOperation } from 'aws-amplify'
 import { listAgents } from './../graphql/queries'
 import { listCompanys } from './../graphql/queries'
 import * as mutations from './../graphql/mutations';
-import { request } from "graphql-request";
+
 
 import {
   Button,
@@ -74,7 +74,7 @@ async function searchAgent()
   console.log(search);
 }
 
-async function APIrequest()
+/* async function APIrequest()
 {
 
   //request("https://g3qoseczgfgqlbpalmvzisip4e.appsync-api.us-east-2.amazonaws.com/graphql", query)
@@ -109,7 +109,7 @@ fetch(url, opts)
   .then(console.log)
   .catch(console.error);
 
-}
+} */
 
   //Pop up detail for selected agent
   function showAgent(id){
@@ -346,7 +346,7 @@ fetch(url, opts)
                     </Table>
                   </CardBody>
                 </Card>
-                <Button onClick={APIrequest}>Request</Button>
+                {/* <Button onClick={APIrequest}>Request</Button> */}
               </Col>
             </Row>
             {/* <button onClick={searchAgent}>SearchAgent</button> */}
