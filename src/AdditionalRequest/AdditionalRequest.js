@@ -84,6 +84,19 @@ function AdditionalRequest() {
       const newMortgageRequest = await API.graphql({ query: mutations.createMortgageRequest, variables:{input: createMortgageRequest}});
   }
 
+  //Setting Confirmation Statement for adding new request
+  function confirmationTemplate(){
+    const clientId = formData.ClientId;
+    const agentId = formData.AgentId;
+    const company = formData.Company;
+    var confirmationMessage = 'Please confirm all the information filled is correct.\nYou are submitting the following \n\n' + 
+                              'Client ID: ' + clientId + '\n' + 
+                              'Agent ID:: ' + agentId + '\n' + 
+                              'Sending Request To: ' + company + '\n'
+    return confirmationMessage;
+  }
+
+  
     return (
       <>
         <div className="content">
@@ -136,7 +149,7 @@ function AdditionalRequest() {
                 </CardBody>
                 <CardFooter>
                   <Button color="warning" href='/'>Back</Button>{' '}
-                  <Button onClick={()=>makeRequest()} className="btn-fill" color="warning" type="submit" href='/'>
+                  <Button onClick={() => { if (window.confirm(confirmationTemplate())) makeRequest() }} className="btn-fill" color="warning" type="submit">
                     Submit
                   </Button>
                 </CardFooter>
