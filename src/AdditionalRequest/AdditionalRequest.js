@@ -69,11 +69,9 @@ function AdditionalRequest() {
   async function makeRequest(){
     let companyId;
     companys.map(function(company){
-      if(!company.companyId){
-        return;
-      }
       if(String(formData.Company) === String(company.name)){
-      companyId = company.companyId;
+        companyId = company.companyId;
+        return;
       }
     })
     const createMortgageRequest =
@@ -84,7 +82,6 @@ function AdditionalRequest() {
         companyId: companyId,
       }
       const newMortgageRequest = await API.graphql({ query: mutations.createMortgageRequest, variables:{input: createMortgageRequest}});
-
   }
 
     return (
