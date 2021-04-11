@@ -87,6 +87,52 @@ function NewRequest() {
       const newMortgageRequest = await API.graphql({ query: mutations.createMortgageRequest, variables:{input: createMortgageRequest}});
 
   }
+
+  async function APIrequest()
+{
+
+  const firstName = formData.First;
+  const lastName = formData.Last;
+  const phone = formData.Phone;
+  const email = formData.Email;
+  const address = formData.Address;
+  const city = formData.City;
+  const state = formData.State;
+  const zip = formData.Zip;
+  const newLocation = formData.New;
+  const company = formData.Company;
+  const agentId = formData.AgentId;
+  //request("https://g3qoseczgfgqlbpalmvzisip4e.appsync-api.us-east-2.amazonaws.com/graphql", query)
+  //.then(console.log)
+  //.catch(console.error);
+
+
+
+  const mutation = `mutation {
+    createMessage(input: {body: "Message", clientId: ${agentId} , currentAddress: "${address}, ${city}", email: "${email}", firstName: "${firstName}", lastName: "${lastName}", newLocation: "${newLocation}", phoneNumber: "${phone}"}) {
+      id
+      clientId
+      body
+      firstName
+      lastName
+      currentAddress
+      newLocation
+      email
+    }
+  }
+  `;
+const url = "https://kqlehrji5rd63ozfeowexckgve.appsync-api.us-east-2.amazonaws.com/graphql";
+const opts = {
+  method: "POST",
+  headers: { "Content-Type": "application/json", "x-api-key": "da2-otxuufes4jhpbndv7adawsgcxe"},
+  body: JSON.stringify({ query: mutation})
+};
+fetch(url, opts)
+  .then(res => res.json())
+  .then(console.log)
+  .catch(console.error);
+
+} 
   //Setting Confirmation Statement for adding new request
     function confirmationTemplate(){
       const firstName = formData.First;
@@ -168,42 +214,7 @@ function NewRequest() {
     });
   }
 
-  async function APIrequest()
-{
 
-  //request("https://g3qoseczgfgqlbpalmvzisip4e.appsync-api.us-east-2.amazonaws.com/graphql", query)
-  //.then(console.log)
-  //.catch(console.error);
-
-  const query = `
-  query searchAgent  {
-    listAgents (filter:{ firstName:{ contains:"Jihwan"}})
-    {
-      items{
-        id
-        firstName
-        lastName
-        email
-        companyName
-        agentId
-        status
-        _version
-      }
-    }
-  }
-  `;
-const url = "https://g3qoseczgfgqlbpalmvzisip4e.appsync-api.us-east-2.amazonaws.com/graphql";
-const opts = {
-  method: "POST",
-  headers: { "Content-Type": "application/json", "x-api-key": "da2-7juiai3t5bei5myz6gtp6vwjci"},
-  body: JSON.stringify({ query })
-};
-fetch(url, opts)
-  .then(res => res.json())
-  .then(console.log)
-  .catch(console.error);
-
-}
     return (
       <>
         <div className="content">
@@ -355,7 +366,7 @@ fetch(url, opts)
                           if(String(company.name) === String(formData.Company)){
                             /* Create the request based on the company's method then exit the loop. */
                             if(String(company.requestMethod) === "API"){
-                              // APIrequest();
+                              APIrequest();
                               createRequest();
                               return;
                             }
