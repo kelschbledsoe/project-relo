@@ -319,6 +319,7 @@ function NewRequest() {
                     <FormGroup row>
                     <Label for="SelectCompany" sm={2}>Select one company to start a mortgage request with. More can be created later.</Label>
                     <Col sm={10}>
+                      {/* Company will be pulled from database */}
                       <Input type="select" name="Company" id="SelectCompany"
                       onChange={handleChange}
                       value={formData.Company || ''}>
@@ -341,12 +342,14 @@ function NewRequest() {
                       companys.map(function(company)
                         {
                           if(String(company.name) === String(formData.Company)){
-                            /* Create the request based on the company's method then exit the loop. */
+                            /* Create the request based on the company's method then exit the loop. 
+                            If it's API, send to API and make request.*/
                             if(String(company.requestMethod) === "API"){
                               APIrequest();
                               createRequest();
                               return;
                             }
+                            /* If it's email, send email and make request */
                             else if(String(company.requestMethod) === "Email"){
                               emailSubmit(); 
                               createRequest();

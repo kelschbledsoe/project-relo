@@ -380,10 +380,13 @@ function Search(){
             <td>{company.email}</td>
             <td>{company.requestMethod}</td>
             <td>{status}</td>
+            {/* Submission button for getting company detail */}
             <td><Button onClick={() => { if (window.confirm(showCompanyInfo(company.companyId))) return }} color="warning">Detail</Button>
+            {/* Submission button for removing company */}
             {" "}<Button onClick={() => { if (window.confirm(removeCompanyConfirmation(company.companyId))) 
             deleteCompany(company.id, company.name, company.email, company.requestMethod, company.companyId, company.status, company._version)
             }} color="warning">Remove Company</Button>
+            {/* Submission button for updating information */}
             {" "}<Button onClick={() => { if (window.confirm("Are you sure you would like to edit this company's information?")) CompanyEdit(company.companyId) }} color="warning">Edit</Button></td>
           </tr>)})}
             </tbody>
