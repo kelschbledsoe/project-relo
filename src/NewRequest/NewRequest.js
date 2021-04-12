@@ -1,4 +1,4 @@
-import React, { useReducer, useState, Component } from 'react';
+import React, { useReducer, useState } from 'react';
 import {Card, CardHeader, 
   CardBody, Row, Col, Button, 
   Form, FormGroup, Label, Input} from 'reactstrap';
@@ -6,7 +6,6 @@ import emailjs from 'emailjs-com';
 import { API, graphqlOperation } from 'aws-amplify';
 import * as mutations from './../graphql/mutations';
 import { listCompanys } from './../graphql/queries'
-
 
   // State object logic
 const formReducer = (state, event) => {
@@ -31,13 +30,11 @@ const formReducer = (state, event) => {
   }
 }
 
-
 function NewRequest() {
   // Query list of companies to fill that part of new request
   const [companys, setCompanys] = useState([])
   let listofcompanys;
   async function queryCompany(){
-    /* make page take longer to load await new Promise(x=>setTimeout(x,10000)) */
     const models = await API.graphql(graphqlOperation(listCompanys))
     listofcompanys = models.data.listCompanys.items
     if(listofcompanys){
@@ -62,7 +59,8 @@ function NewRequest() {
       {
         firstName: formData.First,
         lastName: formData.Last,
-        // Need to add a field here to create an ID b/c of how the back-end set up the mutation
+        // I feel like a broken record, but the backend team didn't set up the ID logic properly for the database
+        // So the client ID needs to be created manually
         agentId: formData.AgentId,
         phone: formData.Phone,
         email: formData.Email,
@@ -73,9 +71,7 @@ function NewRequest() {
         newLocation: formData.New,
         status: 1,
       };
-
       const newClient = await API.graphql({ query: mutations.createClient, variables:{input: createClient}});
-
       const createMortgageRequest =
       {
         // Again, I have no way of actually implementing website functionality because back-end didn't do this right
@@ -85,54 +81,47 @@ function NewRequest() {
         agentId: formData.AgentId,
       }
       const newMortgageRequest = await API.graphql({ query: mutations.createMortgageRequest, variables:{input: createMortgageRequest}});
-
   }
 
   async function APIrequest()
-{
+  {
+    const firstName = formData.First;
+    const lastName = formData.Last;
+    const phone = formData.Phone;
+    const email = formData.Email;
+    const address = formData.Address;
+    const city = formData.City;
+    const state = formData.State;
+    const zip = formData.Zip;
+    const newLocation = formData.New;
+    const company = formData.Company;
+    const agentId = formData.AgentId;
 
-  const firstName = formData.First;
-  const lastName = formData.Last;
-  const phone = formData.Phone;
-  const email = formData.Email;
-  const address = formData.Address;
-  const city = formData.City;
-  const state = formData.State;
-  const zip = formData.Zip;
-  const newLocation = formData.New;
-  const company = formData.Company;
-  const agentId = formData.AgentId;
-  //request("https://g3qoseczgfgqlbpalmvzisip4e.appsync-api.us-east-2.amazonaws.com/graphql", query)
-  //.then(console.log)
-  //.catch(console.error);
-
-
-
-  const mutation = `mutation {
-    createMessage(input: {body: "Message", clientId: ${agentId} , currentAddress: "${address}, ${city}", email: "${email}", firstName: "${firstName}", lastName: "${lastName}", newLocation: "${newLocation}", phoneNumber: "${phone}"}) {
-      id
-      clientId
-      body
-      firstName
-      lastName
-      currentAddress
-      newLocation
-      email
+    const mutation = `mutation {
+      createMessage(input: {body: "Message", clientId: ${agentId} , currentAddress: "${address}, ${city}", email: "${email}", firstName: "${firstName}", lastName: "${lastName}", newLocation: "${newLocation}", phoneNumber: "${phone}"}) {
+        id
+        clientId
+        body
+        firstName
+        lastName
+        currentAddress
+        newLocation
+        email
+      }
     }
+    `;
+    const url = "https://kqlehrji5rd63ozfeowexckgve.appsync-api.us-east-2.amazonaws.com/graphql";
+    const opts = {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-api-key": "da2-otxuufes4jhpbndv7adawsgcxe"},
+      body: JSON.stringify({ query: mutation})
+    };
+    fetch(url, opts)
+      .then(res => res.json())
+      .then(console.log)
+      .catch(console.error);
   }
-  `;
-const url = "https://kqlehrji5rd63ozfeowexckgve.appsync-api.us-east-2.amazonaws.com/graphql";
-const opts = {
-  method: "POST",
-  headers: { "Content-Type": "application/json", "x-api-key": "da2-otxuufes4jhpbndv7adawsgcxe"},
-  body: JSON.stringify({ query: mutation})
-};
-fetch(url, opts)
-  .then(res => res.json())
-  .then(console.log)
-  .catch(console.error);
-
-} 
+  
   //Setting Confirmation Statement for adding new request
     function confirmationTemplate(){
       const firstName = formData.First;
@@ -194,7 +183,6 @@ fetch(url, opts)
     }
 
   const [formData, setFormData] = useReducer(formReducer, {});
-  // This event is the Submit button behavior. Has a cool down period to let the API catch up then has a JS alert box.
   const [submitting, setSubmitting] = useState(false);
   const handleSubmit = event => {
     event.preventDefault();
@@ -214,7 +202,6 @@ fetch(url, opts)
     });
   }
 
-
     return (
       <>
         <div className="content">
@@ -223,16 +210,6 @@ fetch(url, opts)
               <Card className="card-plain">
                 <CardHeader tag='h2'>New Request</CardHeader>
                 <CardHeader>Please complete all fields to submit your request.</CardHeader>
-                {/* {submitting &&
-                  <div>
-                  You are submitting the following:
-                  <ul>
-                    {Object.entries(formData).map(([name, value]) => (
-                      <li key={name}><strong>{name}</strong>:{value.toString()}</li>
-                    ))}
-                  </ul>
-                </div>
-                } */}
                 <CardBody>
                   <div
                     id="NewRequest"
@@ -385,7 +362,6 @@ fetch(url, opts)
             </Col>
           </Row>
         </div>
-        
       </>
     );
   }

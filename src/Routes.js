@@ -7,11 +7,7 @@ import Home from "./Home/Home";
 import AddAgent from "./AddAgent/AddAgent";
 import history from './history';
 import AddCompany from "./AddCompany/AddCompany";
-import ClientDetail from "./ClientDetail/ClientDetail";
-import CompanyDetail from "./CompanyDetail/CompanyDetail";
 import Search from "./Search/Search";
-import AgentDetail from "./AgentDetail/AgentDetail";
-import AdminCompanyDetail from './AdminCompanyDetail/AdminCompanyDetail';
 import AgentHome from './Agent-Home/Agent-Home';
 import AdditionalRequest from './AdditionalRequest/AdditionalRequest'
 import EditAgent from './EditAgent/EditAgent'
@@ -31,15 +27,10 @@ export default class Routes extends Component {
                         <Route path="/ClientList" component={ClientList} />
                         <Route path="/AddAgent" component={AddAgent} />
                         <Route path="/AddCompany" component={AddCompany}/>
-                        <Route path="/ClientDetail" component={ClientDetail}/>
-                        <Route path="/CompanyDetail" component={CompanyDetail}/>
                         <Route path="/Search" component={Search}/>
-                        <Route path="/AgentDetail" component={AgentDetail}/>
-                        <Route path="/AdminCompanyDetail" component={AdminCompanyDetail}/>
                         <Route path="/AdditionalRequest" component={AdditionalRequest}/>
                         <Route path="/EditAgent" component={EditAgent} />
                         <Route path="/EditCompany" component={EditCompany} />
-
                     </Switch>
                 </Router>
             )
@@ -53,15 +44,10 @@ export default class Routes extends Component {
                         <Route path="/ClientList" component={ClientList} />
                         <Route path="/AddAgent" component={AddAgent} />
                         <Route path="/AddCompany" component={AddCompany}/>
-                        <Route path="/ClientDetail" component={ClientDetail}/>
-                        <Route path="/CompanyDetail" component={CompanyDetail}/>
                         <Route path="/Search" component={Search}/>
-                        <Route path="/AgentDetail" component={AgentDetail}/>
-                        <Route path="/AdminCompanyDetail" component={AdminCompanyDetail}/>
                         <Route path="/AdditionalRequest" component={AdditionalRequest}/>
                         <Route path="/EditAgent" component={EditAgent} />
                         <Route path="/EditCompany" component={EditCompany} />
-
                     </Switch>
                 </Router>
             )

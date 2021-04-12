@@ -1,10 +1,7 @@
 import React, { useReducer, useState, useEffect } from 'react';
-import { DataStore } from '@aws-amplify/datastore';
 import { API, graphqlOperation } from 'aws-amplify'
-import { Agent } from './../models';
 import { listAgents } from './../graphql/queries'
 import * as mutations from './../graphql/mutations';
-
 
 // reactstrap components
 import {
@@ -39,7 +36,7 @@ const formReducer = (state, event) => {
 
 function EditAgent(){
   let listofagents;
-  
+  // This function implements editing an agent's information
   async function updateAgent(){
     const models = await API.graphql(graphqlOperation(listAgents));
     listofagents = models.data.listAgents.items;
@@ -78,7 +75,6 @@ function EditAgent(){
           if(agent.id !== null){
             aid = agent.id;
           }
-          
           aaid = agent.agentId;
           newStatus = agent.status;
           av = agent._version;
@@ -116,7 +112,6 @@ function EditAgent(){
         return confirmationMessage;
       }
   const [formData, setFormData] = useReducer(formReducer, {});
-  // This event is the Submit button behavior. Has a cool down period to let the API catch up then has a JS alert box.
   const [submitting, setSubmitting] = useState(false);
   const handleSubmit = event => {
     event.preventDefault();
@@ -158,7 +153,6 @@ function EditAgent(){
                             name="AgentID"
                             onChange={handleChange}
                             value={formData.AgentID || ''}
-                            
                           />
                         </FormGroup>
                       </Col>
@@ -166,17 +160,6 @@ function EditAgent(){
                   </Form>
                 </CardBody>
                 <CardHeader>Please enter the fields you would like to edit for this agent.</CardHeader>
-                {/* {submitting &&
-                  <div>
-                  You are submitting the following:
-                  <ul>
-                    {Object.entries(formData).map(([name, value]) => (
-                      <li key={name}><strong>{name}</strong>:{value.toString()}</li>
-                    ))}
-                  </ul>
-                </div>
-                } */}
-                
                 <CardBody>
                   <Form onSubmit={handleSubmit}>
                     <Row>
@@ -189,7 +172,6 @@ function EditAgent(){
                             type="text"
                             onChange={handleChange}
                             value={formData.First || ''}
-                            
                           />
                         </FormGroup>
                       </Col>
@@ -202,7 +184,6 @@ function EditAgent(){
                             type="text"
                             onChange={handleChange}
                             value={formData.Last || ''}
-                            
                           />
                         </FormGroup>
                       </Col>
@@ -217,7 +198,6 @@ function EditAgent(){
                             type="text"
                             onChange={handleChange}
                             value={formData.Company || ''}
-                            
                           />
                         </FormGroup>
                       </Col>
@@ -232,7 +212,6 @@ function EditAgent(){
                             type="email"
                             onChange={handleChange}
                             value={formData.Email || ''}
-                            
                           />
                         </FormGroup>
                       </Col>

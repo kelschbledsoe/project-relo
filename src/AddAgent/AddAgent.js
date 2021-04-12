@@ -1,10 +1,7 @@
 import React, { useReducer, useState } from 'react';
-import { DataStore } from '@aws-amplify/datastore';
 import { API, graphqlOperation } from 'aws-amplify'
-import { Agent } from './../models';
 import { listAgents } from './../graphql/queries'
 import * as mutations from './../graphql/mutations';
-
 
 // reactstrap components
 import {
@@ -37,8 +34,6 @@ const formReducer = (state, event) => {
 }
 
 function AddAgent() {
-
-
     //Setting Confirmation Statement for adding new agent
     function confirmationTemplate(){
       const firstName = formData.First;
@@ -54,8 +49,7 @@ function AddAgent() {
       return confirmationMessage;
     }
 
-
-  // These async functions are for the API
+  // This creates the agent entry in the database
   async function createAgent()
   {
     const createAgent = {
@@ -65,20 +59,9 @@ function AddAgent() {
       email: formData.Email
     };
     const newAgent = await API.graphql({ query: mutations.createAgent, variables:{input: createAgent}});
-
   }
-  async function queryAgent()
-  {
-    //const models = await DataStore.query(Agent);
-    const models = await API.graphql(graphqlOperation(listAgents))
-    const listofagents = models.data.listAgents.items
-    console.log("working");
-    console.log(listofagents);
-    console.log(listofagents[0].firstName)
-  }
-
+  // Logic for the form information
   const [formData, setFormData] = useReducer(formReducer, {});
-  // This event is the Submit button behavior. Has a cool down period to let the API catch up then has a JS alert box.
   const [submitting, setSubmitting] = useState(false);
   const handleSubmit = event => {
     event.preventDefault();
@@ -107,16 +90,6 @@ function AddAgent() {
                   Add New Agent
                 </CardHeader>
                 <CardHeader>Please complete all fields to submit your request.</CardHeader>
-                {/* {submitting &&
-                  <div>
-                  You are submitting the following:
-                  <ul>
-                    {Object.entries(formData).map(([name, value]) => (
-                      <li key={name}><strong>{name}</strong>:{value.toString()}</li>
-                    ))}
-                  </ul>
-                </div>
-                } */}
                 <CardBody>
                   <Form onSubmit={handleSubmit}>
                     <Row>
@@ -185,11 +158,9 @@ function AddAgent() {
                     </CardFooter>
                   </Form>
                 </CardBody>
-                
               </Card>
             </Col>
           </Row>
-            {/* <button onClick={queryAgent}>Test Submit Button</button> */}
         </div>
       </>
     );

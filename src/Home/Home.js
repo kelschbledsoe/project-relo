@@ -5,7 +5,6 @@ import { listAgents } from './../graphql/queries'
 import { listCompanys } from './../graphql/queries'
 import * as mutations from './../graphql/mutations';
 
-
 import {
   Button,
   Card,
@@ -28,7 +27,6 @@ export default function Home(){
   // render page
   useEffect(() => {
     async function queryAgent(){
-      /* make page take longer to load await new Promise(x=>setTimeout(x,10000)) */
       const models = await API.graphql(graphqlOperation(listAgents))
       listofagents = models.data.listAgents.items
       if(listofagents){
@@ -41,7 +39,6 @@ export default function Home(){
 
   useEffect(() => {
     async function queryCompany(){
-      /* make page take longer to load await new Promise(x=>setTimeout(x,10000)) */
       const models = await API.graphql(graphqlOperation(listCompanys))
       listofcompanys = models.data.listCompanys.items
       if(listofcompanys){
@@ -51,65 +48,6 @@ export default function Home(){
     }
     queryCompany()
   }, [setIsLoaded])
-  
-async function searchAgent()
-{
-  const search = await API.graphql(graphqlOperation(`
-  query searchAgent {
-    listAgents (filter:{ firstName:{ contains:"Jihwan"}})
-    {
-      items{
-        id
-        firstName
-        lastName
-        email
-        companyName
-        agentId
-        status
-        _version
-      }
-    }
-  }
-  `))
-  console.log(search);
-}
-
-/* async function APIrequest()
-{
-
-  //request("https://g3qoseczgfgqlbpalmvzisip4e.appsync-api.us-east-2.amazonaws.com/graphql", query)
-  //.then(console.log)
-  //.catch(console.error);
-
-  const query = `
-  query searchAgent  {
-    listAgents (filter:{ firstName:{ contains:"Jihwan"}})
-    {
-      items{
-        id
-        firstName
-        lastName
-        email
-        companyName
-        agentId
-        status
-        _version
-      }
-    }
-  }
-  `;
-const url = "https://g3qoseczgfgqlbpalmvzisip4e.appsync-api.us-east-2.amazonaws.com/graphql";
-const opts = {
-  method: "POST",
-  headers: { "Content-Type": "application/json", "x-api-key": "da2-7juiai3t5bei5myz6gtp6vwjci"},
-  body: JSON.stringify({ query })
-};
-fetch(url, opts)
-  .then(res => res.json())
-  .then(console.log)
-  .catch(console.error);
-
-} */
 
   //Pop up detail for selected agent
   function showAgent(id){
@@ -215,20 +153,10 @@ fetch(url, opts)
     return confirmationMessage;            
   }
 
-  function AgentEdit(id) {
-    var url = "/EditAgent?id=" + encodeURIComponent(id);
-    window.location.href = url;
-  }
-
-  function CompanyEdit(id){
-    var url = "/EditCompany?id=" + encodeURIComponent(id);
-    window.location.href = url;
-  }
-  
   // Function to update the agent information. Pass in all the agent values.
   async function updateAgent(aid, afn, aln, acn, ae, aaid, as, av){
     // Make this all the details of the existing agent and change any you want changed
-    // I know in this use case it's just to deactivate an agent but I'm putting this logic here incase I need it later
+    // I know in this use case it's just to deactivate an agent but I'm putting this logic to be safe
     let newStatus = as === 1 ? 0:1;
     const agentDetails={
       id: aid,
@@ -257,7 +185,6 @@ fetch(url, opts)
     };
     const updatedTodo = await API.graphql({ query: mutations.updateCompany, variables: {input: companyDetails}});
   }
-
 
     return (
       <>
@@ -296,7 +223,6 @@ fetch(url, opts)
                           <td>{agent.companyName}</td>
                           <td>{agent.email}</td>
                           <td><Button onClick={() => { if (window.confirm(showAgent(agent.agentId))) return }} color="warning">Detail</Button>
-                          {/* {" "}<Button color="warning">Set as Inactive</Button></td> */}
                           {" "}<Button onClick={() => { if (window.confirm(updateAgentStatusConfirmation(agent.agentId)))
                             updateAgent(agent.id, agent.firstName, agent.lastName, agent.companyName, agent.email, agent.agentId, agent.status, agent._version) }} 
                             color="warning">Set as Inactive</Button></td>
@@ -346,10 +272,8 @@ fetch(url, opts)
                     </Table>
                   </CardBody>
                 </Card>
-                {/* <Button onClick={APIrequest}>Request</Button> */}
               </Col>
             </Row>
-            {/* <button onClick={searchAgent}>SearchAgent</button> */}
           </div>
         </>
         )}

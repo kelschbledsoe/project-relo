@@ -1,4 +1,4 @@
-import React, { useReducer, useState, useEffect } from 'react';
+import React, { useReducer, useState } from 'react';
 import { API, graphqlOperation } from 'aws-amplify'
 import { listCompanys } from './../graphql/queries'
 import * as mutations from './../graphql/mutations';
@@ -36,6 +36,7 @@ const formReducer = (state, event) => {
 
 function EditCompany(){
   let listofcompanys;
+  // This function edits the information of a company
   async function updateCompany(){
     const models = await API.graphql(graphqlOperation(listCompanys))
     listofcompanys = models.data.listCompanys.items;
@@ -97,7 +98,6 @@ function EditCompany(){
       return confirmationMessage;
     }
   const [formData, setFormData] = useReducer(formReducer, {});
-  // This event is the Submit button behavior. Has a cool down period to let the API catch up then has a JS alert box.
   const [submitting, setSubmitting] = useState(false);
   const handleSubmit = event => {
     event.preventDefault();
@@ -139,7 +139,6 @@ function EditCompany(){
                             name="CompanyID"
                             onChange={handleChange}
                             value={formData.CompanyID || ''}
-                            
                           />
                         </FormGroup>
                       </Col>
@@ -147,16 +146,6 @@ function EditCompany(){
                   </Form>
                 </CardBody>
                 <CardHeader>Please enter the fields you would like to edit for this company.</CardHeader>
-                {/* {submitting &&
-                  <div>
-                  You are submitting the following:
-                  <ul>
-                    {Object.entries(formData).map(([name, value]) => (
-                      <li key={name}><strong>{name}</strong>:{value.toString()}</li>
-                    ))}
-                  </ul>
-                </div>
-                } */}
                 <CardBody>
                   <Form onSubmit={handleSubmit}>
                     <Row>
@@ -169,7 +158,6 @@ function EditCompany(){
                             name="CompanyName"
                             onChange={handleChange}
                             value={formData.CompanyName || ''}
-                            
                           />
                         </FormGroup>
                       </Col>
@@ -182,7 +170,6 @@ function EditCompany(){
                             name="CompanyEmail"
                             onChange={handleChange}
                             value={formData.CompanyEmail || ''}
-                            
                           />
                         </FormGroup>
                       </Col>
@@ -207,7 +194,6 @@ function EditCompany(){
                     </CardFooter>
                   </Form>
                 </CardBody>
-                
               </Card>
             </Col>
           </Row>

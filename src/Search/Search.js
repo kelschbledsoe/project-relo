@@ -70,7 +70,6 @@ function Search(){
 } 
 
   const [formData, setFormData] = useReducer(formReducer, {});
-  // This event is the Submit button behavior. Has a cool down period to let the API catch up then has a JS alert box.
   const [submitting, setSubmitting] = useState(false);
   const handleSubmit = event => {
     event.preventDefault();
@@ -194,6 +193,10 @@ function Search(){
     return confirmationMessage;  
   }
 
+  // We added these functions to try and move agent and company info to another page to make a super
+  // intuitive edit form. For some reason, information routes on local but not in prod. Leaving here
+  // to show we attempted to make it easier (as in, the ID for the specific entry was already known, the user
+  // just needed to sspecify which info to change) and we couldn't get it to work
   function AgentEdit(id) {
     var url = "EditAgent?id=" + encodeURIComponent(id);
     window.location.href = url;
@@ -327,7 +330,6 @@ function Search(){
                   <td>{agent.email}</td>
                   <td>{status}</td>
                   <td><Button onClick={() => { if (window.confirm(showAgent(agent.agentId))) return }} color="warning">Detail</Button>
-                            {/* {" "}<Button color="warning">Set as Inactive</Button></td> */}
                             {" "}<Button onClick={() => { if (window.confirm(updateAgentStatusConfirmation(agent.agentId))) 
                             updateAgent(agent.id, agent.firstName, agent.lastName, agent.companyName, agent.email, agent.agentId, agent.status, agent._version)
                             }} color="warning">Set as Inactive</Button>
@@ -341,7 +343,6 @@ function Search(){
                       <td>{agent.email}</td>
                       <td>{status}</td>
                       <td><Button onClick={() => { if (window.confirm(showAgent(agent.agentId))) return }} color="warning">Detail</Button>
-                                {/* {" "}<Button color="warning">Set as Inactive</Button></td> */}
                                 {" "}<Button onClick={() => { if (window.confirm(updateAgentStatusConfirmation(agent.agentId))) 
                                 updateAgent(agent.id, agent.firstName, agent.lastName, agent.companyName, agent.email, agent.agentId, agent.status, agent._version)
                                 }} color="warning">Set as Active</Button>

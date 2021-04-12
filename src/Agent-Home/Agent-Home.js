@@ -36,7 +36,6 @@ export default function Home(){
 
   useEffect(() => {
     async function querymortgageRequests(){
-      /* make page take longer to load await new Promise(x=>setTimeout(x,10000)) */
       const models = await API.graphql(graphqlOperation(listMortgageRequests))
       listofmortgagerequests = models.data.listMortgageRequests.items
       if(listofmortgagerequests){
@@ -70,7 +69,6 @@ export default function Home(){
       clientAddress = client.curAddress + " " + client.curCity + ", " + client.curZip
       clientNew = client.newLocation
       clientAgent = client.agentId
-
       }
     })
     var confirmationMessage = 'Client Information \n\n' + 
@@ -82,7 +80,6 @@ export default function Home(){
                               'New Location: ' + clientNew + '\n' + 
                               'Agent ID: ' + clientAgent + '\n' +
                               'Status: ' + clientStatus + "\n" 
-
                               
     return confirmationMessage;
   }
@@ -91,7 +88,6 @@ export default function Home(){
       var confirmationMessage = 'Are you sure you would like to mark this client as completed? \n Once confirmed, this information will not be shown in the home page. \n\n'                   
       return confirmationMessage;    
     }
-
       //Pop up detail for selected client
   function showMortgageRequest(id){
     var requestStatus = ' '
@@ -110,7 +106,6 @@ export default function Home(){
       requestClientId = request.clientId
       requestAgentId = request.agentId
       requestCompanyId = request.companyId
-
       }
     })
     var confirmationMessage = 'Mortgage Request Information \n\n' + 
@@ -120,7 +115,6 @@ export default function Home(){
                               'Client ID: ' + requestClientId + '\n' + 
                               'Agent ID: ' + requestAgentId + '\n' +
                               'Status: ' + requestStatus + "\n" 
-
                               
     return confirmationMessage;
   }
@@ -131,8 +125,8 @@ export default function Home(){
     return confirmationMessage;    
   }
 
+  // This function is only to change a request status. It's used elsewhere to update the actual entry data fields
   async function updateClient(cid, cfn, cln, ccid, caid, cp, ce, cca, ccc, ccs, ccz, cnl, cs, cv){
-    // Hey look I needed the logic lol
     let newStatus = cs === 1 ? 0:1;
     const clientDetails={
       id: cid,
@@ -152,7 +146,7 @@ export default function Home(){
     };
     const updatedTodo = await API.graphql({ query: mutations.updateClient, variables: {input: clientDetails}});
   }
-
+  // This function is only to change a request status. It's used elsewhere to update the actual entry data fields
   async function updateMortgageRequest(mid, ms, mrid, mmid, mcid, maid, mccid, mv){
     let newStatus = ms === 1 ? 0:1;
     const mortgageRequestDetails={
@@ -193,6 +187,7 @@ export default function Home(){
                         </tr>
                       </thead>
                       <tbody>
+                        {/* Create the table entries */}
                         {
                         clients.map(function(client)
                         {
@@ -230,7 +225,9 @@ export default function Home(){
                         <tr>
                           <th>ID</th>
                           {/* It would be a better UX to show the client's name and company's name but that's not how backend
-                          set up the database or the queries. If I forcefully implemented that it would be super messy. */}
+                          set up the database or the queries. If I forcefully implemented that it would be super messy and inefficient.
+                          I told the backend team several times for weeks how to make the databases and they didn't do it.
+                          I'm only working with what I'm given. */}
                           <th>Company ID</th> 
                           <th>Client ID</th>
                           <th>Status</th>
@@ -241,6 +238,10 @@ export default function Home(){
                         {
                         mortgageRequests.map(function(request)
                         {
+                          // If I were to add the company and client names, I would need to pull the entirety of both of those databases
+                          // And loop through both of them within this loop to find the information. Solely because the backend team
+                          // Didn't put the proper fields in the mortgage request table or create a way for me to pull singular entries.
+                          // I'm not doing that. Sorry.
                           let status;
                           request.status === 1 ? status="Active":status="Completed";
                           if(!request.mortgageId || request.status !== 1){

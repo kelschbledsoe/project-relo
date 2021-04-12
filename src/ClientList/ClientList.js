@@ -25,6 +25,7 @@ function ClientList(){
     I know this is the complete wrong way to implement a search page. The back-end team would not properly
     create a query for me to actually implement the search page. This was the only way I could get something
     functional in time.
+    It pulls the entire database, then filters based on what the user searches for.
   */
   async function queryClient(){
     const models = await API.graphql(graphqlOperation(listClients))
@@ -45,7 +46,6 @@ function ClientList(){
   } 
 
   const [formData, setFormData] = useReducer(formReducer, {});
-  // This event is the Submit button behavior. Has a cool down period to let the API catch up then has a JS alert box.
   const [submitting, setSubmitting] = useState(false);
   const handleSubmit = event => {
     event.preventDefault();
@@ -110,8 +110,8 @@ function ClientList(){
       return confirmationMessage;    
     }
 
+    // Here this function is just used for the Active / Complete status change
   async function updateClient(cid, cfn, cln, ccid, caid, cp, ce, cca, ccc, ccs, ccz, cnl, cs, cv){
-    // Hey look I needed the logic lol
     let newStatus = cs === 1 ? 0:1;
     const clientDetails={
       id: cid,
@@ -182,6 +182,7 @@ function ClientList(){
           </Col>
         </Row>
       <CardBody>
+        {/* I have no clue how to make this table header only appear with the search results. */}
         <h3>Client Results</h3>
         <Table bordered>
           <thead>
@@ -199,28 +200,24 @@ function ClientList(){
             {
               let status;
               client.status === 1 ? status="Active":status="Completed";
-              /* Commenting out so no issues with demo
-              if(!client.clientId){
-                return;
-              }*/
               if (status === "Active"){
-              return(<tr>
-              <td>{client.clientId}</td>
-              <td>{client.firstName} {client.lastName}</td>
-              <td>{client.email}</td>
-              <td>{status}</td>
-              <td><Button onClick={()=>{ alert(showClient(client.clientId)); }} color="warning">Detail</Button>
-              {" "}<Button onClick={() => { if (window.confirm(updateClientStatusConfirmation(client.clientId))) 
-              updateClient(client.id, client.firstName, client.lastName, client.clientId, client.agentId, client.phone, client.email, client.curAddress, client.curCity, client.curState, client.curZip, client.newLocation, client.status, client._version)
-              }} color="warning">Mark as Complete</Button></td>
-            </tr>)}
-            else{
-              return(<tr>
+                return(<tr>
                 <td>{client.clientId}</td>
                 <td>{client.firstName} {client.lastName}</td>
                 <td>{client.email}</td>
                 <td>{status}</td>
-                <td><Button onClick={()=>{ alert(showClient(client.clientId)); }} color="warning">Detail</Button></td>
+                <td><Button onClick={()=>{ alert(showClient(client.clientId)); }} color="warning">Detail</Button>
+                {" "}<Button onClick={() => { if (window.confirm(updateClientStatusConfirmation(client.clientId))) 
+                updateClient(client.id, client.firstName, client.lastName, client.clientId, client.agentId, client.phone, client.email, client.curAddress, client.curCity, client.curState, client.curZip, client.newLocation, client.status, client._version)
+                }} color="warning">Mark as Complete</Button></td>
+              </tr>)}
+              else{
+                return(<tr>
+                  <td>{client.clientId}</td>
+                  <td>{client.firstName} {client.lastName}</td>
+                  <td>{client.email}</td>
+                  <td>{status}</td>
+                  <td><Button onClick={()=>{ alert(showClient(client.clientId)); }} color="warning">Detail</Button></td>
               </tr>)}
             })}
           </tbody>

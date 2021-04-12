@@ -36,7 +36,6 @@ function AdditionalRequest() {
   const [companys, setCompanys] = useState([])
   let listofcompanys;
   async function queryCompany(){
-    /* make page take longer to load await new Promise(x=>setTimeout(x,10000)) */
     const models = await API.graphql(graphqlOperation(listCompanys))
     listofcompanys = models.data.listCompanys.items
     if(listofcompanys){
@@ -46,7 +45,6 @@ function AdditionalRequest() {
   queryCompany()
 
   const [formData, setFormData] = useReducer(formReducer, {});
-  // This event is the Submit button behavior. Has a cool down period to let the API catch up then has a JS alert box.
   const [submitting, setSubmitting] = useState(false);
   const handleSubmit = event => {
     event.preventDefault();
@@ -68,6 +66,8 @@ function AdditionalRequest() {
 
   async function makeRequest(){
     let companyId;
+    // I know this isn't how this should work, but the backend team never gave me a way to pull a singluar entry
+    // in a database, so I have to do it this way
     companys.map(function(company){
       if(String(formData.Company) === String(company.name)){
         companyId = company.companyId;
@@ -96,7 +96,6 @@ function AdditionalRequest() {
     return confirmationMessage;
   }
 
-  
     return (
       <>
         <div className="content">

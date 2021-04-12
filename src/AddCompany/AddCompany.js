@@ -1,6 +1,5 @@
 import React, { useReducer, useState } from "react";
 import { API, graphqlOperation } from 'aws-amplify';
-import { Company } from './../models';
 import { listCompanys } from './../graphql/queries';
 import * as mutations from './../graphql/mutations';
 
@@ -35,7 +34,6 @@ const formReducer = (state, event) => {
 }
 
 function AddCompany() {
-  
   //Setting Confirmation Statement for adding new company
   function confirmationTemplate(){
     const company = formData.Company;
@@ -56,23 +54,13 @@ function AddCompany() {
         name: formData.Company,
         email: formData.Email,
         requestMethod: formData.Method,
-        // Need to add a field here to create an ID b/c of how the back-end set up the mutation
+        // Backend team didn't set up the database or mutations properly, so you need to add company IDs manually
       };
 
       const newCompany = await API.graphql({ query: mutations.createCompany, variables:{input: createCompany}});
   }
 
-  async function queryCompany()
-  {
-    //const models = await DataStore.query(Agent);
-    const models = await API.graphql(graphqlOperation(listCompanys))
-    const listofCompanies = models.data.listCompanys.items
-    console.log("Co.");
-    console.log(listofCompanies);
-  }
-
   const [formData, setFormData] = useReducer(formReducer, {});
-  // This event is the Submit button behavior. Has a cool down period to let the API catch up then has a JS alert box.
   const [submitting, setSubmitting] = useState(false);
   const handleSubmit = event => {
     event.preventDefault();
@@ -101,16 +89,6 @@ function AddCompany() {
                   Add New Company
                 </CardHeader>
                 <CardHeader>Please complete all fields to submit your request.</CardHeader>
-                {/* {submitting &&
-                  <div>
-                  You are submitting the following:
-                  <ul>
-                    {Object.entries(formData).map(([name, value]) => (
-                      <li key={name}><strong>{name}</strong>:{value.toString()}</li>
-                    ))}
-                  </ul>
-                </div>
-                } */}
                 <CardBody>
                   <Form onSubmit={handleSubmit}>
                     <Row>
@@ -161,7 +139,6 @@ function AddCompany() {
                     </CardFooter>
                   </Form>
                 </CardBody>
-                
               </Card>
             </Col>
           </Row>
